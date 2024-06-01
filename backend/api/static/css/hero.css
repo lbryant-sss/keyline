@@ -1,0 +1,115 @@
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic);
+
+.hero {
+    margin-top: 5%;
+    display: block;
+    font-family: 'Droid Serif';
+    font-size: 16px;
+    line-height: 24px;
+    
+    @supports (display: flex) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: stretch;
+    }
+    
+    @supports (grid-template-columns: auto) and (grid-template-rows: auto) {
+        display: grid;
+        grid-template-columns: 20% 60% 20%;
+            grid-template-rows: 1fr;
+    }
+}
+
+code {
+  color: #ff99cc;
+}
+
+.page-divider {
+  color: #999;
+  display: block;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap; 
+}
+
+.page-number {
+  display: inline-block;
+  padding: 5px;
+  position: relative;
+
+  &:before,
+  &:after {
+    background-color: #dcdcdc;
+    content: "";
+    height: 2px;
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+  }
+  &:before {
+    right: 200%;
+  }
+  &:after {
+    left: 200%;
+  }
+}
+
+.sidebar {
+  background-color: #333;
+  color: #fff;
+  padding: 0 5%;
+  width: 20%;
+  
+  @supports(display: flex) {
+    flex-grow: 1;
+    padding: 0 5%;
+  }
+  
+  @supports (grid-template-columns: auto) and (grid-template-rows: auto) {
+    padding: 0 5%;
+    width: auto;
+  }
+  
+  h2 {
+    font-size: 24px;
+    font-weight: 400;
+  }
+}
+.container {
+  background-color: #fcfcfc;
+  color: #333;
+  padding: 0 5%;
+  
+  @supports (display: flex) {
+    flex-grow: 4;
+    padding: 0 5%;
+  }
+  
+  @supports (grid-template-columns: auto) and (grid-template-rows: auto) {
+    padding: 0 5%;
+  }
+  
+  h1 {
+    font-size: 48px;
+    font-weight: 400;
+  }
+}
+.third-column {
+  background-color: #dcdcdc;
+  color: #333;
+  font-size: 12px;
+  padding: 0 10%;
+  text-align: center;
+  width: 20%;
+  
+  @supports (display: flex) {
+    flex-grow: 1;
+    padding: 0 5%;
+  }
+  
+  @supports (grid-template-columns: auto) and (grid-template-rows: auto) {
+    padding: 0 10%;
+    width: auto;
+  }
+}
