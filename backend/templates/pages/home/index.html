@@ -101,11 +101,12 @@
                   <button type="submit" class="upload-button"> Upload </button>
                 </div>
               </form>
-              {% if success %}
+              {% if succ %}
                   <div class="success-message">
-                      <p>File uploaded successfully for table: {{ table_name }}</p>
+                      <p>{% succ %}File uploaded successfully for table: {{ table_name }}</p>
                   </div>
               {% endif %}
+              
              </section>
             <!--File Upload section on side bar end-->
 

@@ -6,8 +6,8 @@ class UploadForm(forms.ModelForm):
         model = UploadModel
         fields = ['data_file_upload', 'table_name']
 
-    def clean_file_upload(self):
-        file = self.cleaned_data.get('file_upload')
+    def clean_data_file_upload(self):  # Renamed to match the field name
+        file = self.cleaned_data.get('data_file_upload')
         if file:
             if not file.name.endswith('.csv'):
                 raise forms.ValidationError("Only .csv files are allowed.")
