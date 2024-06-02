@@ -1,20 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-.upload-area {
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 	font-family: 'Montserrat', sans-serif;
 }
 .form-container {
+	padding-top: 10px;
 	width: 100%;
 	height: auto;
-	background-color: #7b2cbf;
+	background-color: #fff;
 	display: flex;
    	justify-content: center;
 	align-items: center;
-    margin-left: 0px;
 }
 .upload-files-container {
 	background-color: #f7fff7;
 	width: 100%;
-	padding: 30px 60px;
 	border-radius: 10px;
 	display: flex;
    	align-items: center;
@@ -24,25 +26,24 @@
 }
 .drag-file-area {
 	border: 2px dashed #7b2cbf;
-	border-radius: 40px;
-	margin: 10px 0 15px;
+	border-radius: 5px;
 	padding: 30px 50px;
-	width: 100px;
+	width: 100%;
 	text-align: center;
 }
 .drag-file-area .upload-icon {
-	font-size: 50px;
+	font-size: 25px;
 }
 .drag-file-area h3 {
-	font-size: 26px;
+	font-size: 16px;
 	margin: 15px 0;
 }
 .drag-file-area label {
-	font-size: 19px;
+	font-size: 16px;
 }
 .drag-file-area label .browse-files-text {
 	color: #7b2cbf;
-	font-weight: bold;
+	font-weight: bolder;
 	cursor: pointer;
 }
 .browse-files span {
@@ -78,7 +79,7 @@
 	color: #f7fff7;
 	background-color: #7b2cbf;
   	transition: all 1s;
-	width: 200px;
+	width: 100%;
 	position: relative;
 	display: none;
 	flex-direction: row;
@@ -86,13 +87,13 @@
 	align-items: center;
 	margin: 10px 0 15px;
 	padding: 10px 20px;
-	border-radius: 25px;
+	border-radius: 5px;
 	cursor: pointer;
 }
 .file-info {
 	display: flex;
 	align-items: center;
-	font-size: 15px;
+	font-size: 10px;
 }
 .file-icon {
 	margin-right: 10px;
@@ -108,7 +109,7 @@
 	position: absolute;
 	bottom: 0;
 	left: 4.5%;
-	width: 0;
+	width: 20px;
 	height: 5px;
 	border-radius: 25px;
 	background-color: #4BB543;
@@ -119,10 +120,15 @@
 	color: #f7fff7;
 	display: flex;
 	align-items: center;
-	font-size: 18px;
+	font-size: 16px;
 	border: none;
-	border-radius: 20px;
+	border-radius: 5px;
 	margin: 10px;
 	padding: 7.5px 50px;
 	cursor: pointer;
+	transition: background-color 0.3s ease;
+
+	&:hover{
+		background-color: #391955;
+	}
 }
