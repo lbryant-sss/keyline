@@ -5,26 +5,28 @@ from .forms import UploadForm
 # Create your views here.
 class Index(TemplateView):
     template_name = 'pages/home/index.html'
+    context = {}
 
     def get(self, request, *args, **kwargs):
-        context  = {}
+        form = UploadForm()  # Initialize the form
+        context = {'form': form}  # Add form to context
         return render(request, self.template_name, context)
 
-
-def my_form_view(request):
-    if request.method == 'POST':
+    def post(self, request, *args, **kwargs):  
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             # Handle the form data
-            created_at = form.cleaned_data['created_at']
+            table_name = form.cleaned_data['table_name']
             file_upload = form.cleaned_data['file_upload']
             
-            # Here you can save the data to the database or process it
-            # ...
             form.save()
 
-            return render(request, 'success.html', {'form': form})
-    else:
-        form = UploadForm()
+            context = {
+                'form':form,
+                'success':True,
+                'table_name':table_name,
+            }
 
-    return render(request, 'form_template.html', {'form': form})
+            return render(request, self.template_name, context)  # Indicate success
+        else:
+            return render(request, self.template_name, {'form': form})  # Redisplay form with errors

@@ -65,11 +65,32 @@
             <section class="upload-area">
               <form class="form-container" enctype='multipart/form-data'>
                 {% csrf_token %}
+                 <!-- Text input for table_name -->
+                  <div class="input-group">
+                    <label for="id_table_name">Table Name:</label>
+                    <input type="text" name="table_name" id="id_table_name" required>
+                    {% if form.table_name %}
+                    <div class="error">
+                      {% for error in form.table_name.errors %}
+                        <p>{{ error }}</p>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
                 <div class="upload-files-container">
                   <div class="drag-file-area">
                     <span class="material-icons-outlined upload-icon"> file_upload </span>
                     <h3 class="dynamic-message"> Drag & Drop<br />csv files here </h3>
                     <label class="label"> or <span class="browse-files"> <input type="file" class="default-file-input" name="file_upload"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span> </label>
+                     <!-- Display errors for file_upload -->
+                      {% if form.file_upload.errors %}
+                      <div class="error">
+                          {% for error in form.file_upload.errors %}
+                              <p>{{ error }}</p>
+                          {% endfor %}
+                      </div>
+                      {% endif %}
+
                   </div>
                   <span class="cannot-upload-message"> <span class="material-icons-outlined">error</span> Please select a file first <span class="material-icons-outlined cancel-alert-button">cancel</span> </span>
                   <div class="file-block">
@@ -80,6 +101,11 @@
                   <button type="submit" class="upload-button"> Upload </button>
                 </div>
               </form>
+              {% if success %}
+                  <div class="success-message">
+                      <p>File uploaded successfully for table: {{ table_name }}</p>
+                  </div>
+              {% endif %}
              </section>
             <!--File Upload section on side bar end-->
 

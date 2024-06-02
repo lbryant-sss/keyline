@@ -4,7 +4,7 @@ from .models import UploadModel
 class UploadForm(forms.ModelForm):
     class Meta:
         model = UploadModel
-        fields = ['data_file_upload']
+        fields = ['data_file_upload', 'table_name']
 
     def clean_file_upload(self):
         file = self.cleaned_data.get('file_upload')
