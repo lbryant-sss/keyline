@@ -9,9 +9,7 @@ class Index(TemplateView):
     context = {}
 
     def get(self, request, *args, **kwargs):
-        form = UploadForm()  # Initialize the form
-
-        # Retrieve all instances of UploadModel
+        form = UploadForm() 
         uploads = UploadModel.objects.all()
         
         # Extract file names from the instances
@@ -25,7 +23,6 @@ class Index(TemplateView):
         if form.is_valid():
             # Handle the form data
             table_name = form.cleaned_data['table_name']
-            file_upload = form.cleaned_data['file_upload']
             
             form.save()
 

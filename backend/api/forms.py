@@ -5,10 +5,13 @@ class UploadForm(forms.ModelForm):
     class Meta:
         model = UploadModel
         fields = ['data_file_upload', 'table_name']
-
-    def clean_data_file_upload(self):  # Renamed to match the field name
-        file = self.cleaned_data.get('data_file_upload')
-        if file:
-            if not file.name.endswith('.csv'):
-                raise forms.ValidationError("Only .csv files are allowed.")
-        return file
+        widgets = {
+            'table_name': forms.TextInput(attrs={
+                'class':'form-control',
+                'id': 'table_name_input',
+            }),
+            'file_upload': forms.FileInput(attrs={
+                'class': 'form-control-file',
+                'id': 'file-upload-input',
+            })
+        }

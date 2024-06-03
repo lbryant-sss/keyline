@@ -6,12 +6,9 @@
     <title>keyline</title>
 </head>
 <body>
-    <form  method="post">
+    <form  method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="table_name">Table Name: </label>
-        <input type="text" name="{{data_file_upload}}" id="">
-        <label for="table_name">Choose File </label>
-        <input type="file" name="{{file_upload}}" id="">
+        {{ form }}
         <input type="submit" value="Upload">
     </form>
     {% if table_name %}
