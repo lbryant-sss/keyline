@@ -23,8 +23,15 @@ class Index(TemplateView):
         if form.is_valid():
             # Handle the form data
             table_name = form.cleaned_data['table_name']
-            
-            form.save()
+            uploaded_file = request.FILES['data_file_upload']
+            file_name = uploaded_file.name
+
+            if file_name.lower().endswith('.csv'):
+                form.save()
+            else:
+                raise ValueError("Not Good")
+
+            #form.save()
 
             if form.save():
                 success_text = "Saved"
@@ -38,4 +45,5 @@ class Index(TemplateView):
 
             return render(request, self.template_name, context)  # Indicate success
         else:
+            
             return render(request, self.template_name, {'form': form})  # Redisplay form with errors
