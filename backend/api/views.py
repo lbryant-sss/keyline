@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView
+from django.shortcuts import render, get_object_or_404
+from django.views.generic import TemplateView, DetailView
 from .forms import UploadForm
 from .models import UploadModel
+import csv
 
 # Create your views here.
 class Index(TemplateView):
@@ -47,3 +48,9 @@ class Index(TemplateView):
         else:
             
             return render(request, self.template_name, {'form': form})  # Redisplay form with errors
+
+
+
+class CsvDetails(DetailView):
+    template_name = 'pages/home/index-test.html'
+    model = UploadModel
