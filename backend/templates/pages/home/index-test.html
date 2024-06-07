@@ -19,11 +19,36 @@
     <p>No file chosen</p>
     </div>
 {% endif %}
-<h1>List of Files</h1>
-    <ul>
-        {% for file in files %}
-            <a href="">{{ file }}</a>
+
+
+    <h1>CSV Data for {{ table_name }}</h1>
+    {% if success %}
+    <p>{{ succ }}</p>
+{% endif %}
+
+<h2>Uploaded Files</h2>
+
+<ul>
+    {% for file in files %}
+        <li>
+            <a href="?upload_id={{ file.id }}">{{ file.name }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if data %}
+    <h2>File Contents</h2>
+    <table border="1">
+        {% for row in data %}
+            <tr>
+                {% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
         {% endfor %}
-    </ul>
+    </table>
+    {% else %}
+    <p>No table to show</p>
+{% endif %}
 </body>
 </html>
