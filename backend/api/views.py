@@ -7,7 +7,8 @@ import csv
 
 
 class Index(TemplateView):
-    template_name = 'pages/home/index-test.html'
+    template_name = 'pages/home/index.html'
+    #'pages/home/index-test.html'
     
     def get(self, request, *args, **kwargs):
         form = UploadForm()

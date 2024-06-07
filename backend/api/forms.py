@@ -8,7 +8,7 @@ class UploadForm(forms.ModelForm):
         widgets = {
             'table_name': forms.TextInput(attrs={
                 'class':'form-control',
-                'id': 'table_name_input',
+                'id': 'id_table_name',
                 
             }),
             'file_upload': forms.FileInput(attrs={
