@@ -4,7 +4,30 @@
     height: 50vh;
     width: 100%;
     padding: 15px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 12px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+table {
+    border-collapse: collapse; /* Removes space between cells */
+  }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+  }
+  th {
+    background-color: #eee;
+    font-weight: bold;
+  }
+  
+
+
+/*Upload list styles*/
+.home-list{
+    text-align: left;
+    text-decoration: none;
 }
 
+.upload-list-label{
+    padding-top: 3px;
+}

@@ -9,10 +9,11 @@ class UploadForm(forms.ModelForm):
             'table_name': forms.TextInput(attrs={
                 'class':'form-control',
                 'id': 'id_table_name',
-                
+                'required': True,
             }),
             'file_upload': forms.FileInput(attrs={
-                'class': 'form-control-file',
+                'class': 'default-file-input',
                 'id': 'file-upload-input',
+                'required': True,
             })
         }

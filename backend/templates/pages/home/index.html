@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/upload.css'%}">
     <link rel="stylesheet" href="{% static 'css/data_preview.css'%}">
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
+    <script src="{% static 'js/search.js' %}" defer></script>
     <script src="{% static 'js/upload.js' %}"></script>
     <title>keyline</title>
 </head>
@@ -66,75 +65,63 @@
         <aside class="sidebar">
             <!--File Upload section on side bar begin-->
             <section class="upload-area">
-              <form class="form-container" enctype='multipart/form-data'>
+              <form class="form-container" enctype='multipart/form-data' method="POST">
                 {% csrf_token %}
-                 <!-- Text input for table_name -->
-                  <div class="input-group">
-                    <label for="id_table_name">Table Name:</label>
-                    <input type="text" name="table_name" id="id_table_name" required>
-                    {% if form.table_name %}
-                    <div class="error">
-                      {% for error in form.table_name.errors %}
-                        <p>{{ error }}</p>
-                      {% endfor %}
-                    </div>
-                    {% endif %}
-                </div>
-                <div class="upload-files-container">
-                  <div class="drag-file-area">
-                    <span class="material-icons-outlined upload-icon"> file_upload </span>
-                    <h3 class="dynamic-message"> Drag & Drop<br />csv files here </h3>
-                    <label class="label"> or <span class="browse-files"> <input type="file" class="default-file-input" name="file_upload"/> <span class="browse-files-text">browse file</span> <span>from device</span> </span> </label>
-                     <!-- Display errors for file_upload -->
-                      {% if form.file_upload.errors %}
-                      <div class="error">
-                          {% for error in form.file_upload.errors %}
-                              <p>{{ error }}</p>
-                          {% endfor %}
-                      </div>
-                      {% endif %}
-
-                  </div>
-                  <span class="cannot-upload-message"> <span class="material-icons-outlined">error</span> Please select a file first <span class="material-icons-outlined cancel-alert-button">cancel</span> </span>
-                  <div class="file-block">
-                    <div class="file-info"> <span class="material-icons-outlined file-icon">description</span> <span class="file-name"> </span> | <span class="file-size">  </span> </div>
-                      <span class="material-icons remove-file-icon">delete</span>
-                    <div class="progress-bar"> </div>
-                  </div>
-                  <button type="submit" class="upload-button"> Upload </button>
-                </div>
-              </form>
-              {% if succ %}
-                  <div class="success-message">
-                      <p>File uploaded successfully for table: {{ table_name }}</p>
-                  </div>
-              {% endif %}
-              
+                 {{ form }}
+                 <input type="submit" value="Upload">
+                </form> 
              </section>
             <!--File Upload section on side bar end-->
 
 
           </aside>
           <main class="container">
+            {% if data %}
             <div class="data_preview">
-              {% if data %}
+              
               <h2>File Contents {{ file.name }}</h2>
-              <table border="1" class="table table-striped">
-                  {% for row in data %}
-                      <tr>
-                          {% for cell in row %}
-                              <td>{{ cell }}</td>
-                          {% endfor %}
-                      </tr>
-                  {% endfor %}
-              </table>
-          {% endif %}
+              <!--Data Query Form-->
+              <form method="GET">
+                <input id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
+                <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
+                <button type="submit">Search</button>
+            </form>
+              <!--Data Query End-->
+              <table id="dataTable">
+                <thead>
+                    <tr>
+                        {% if data %}
+                            {% for column in data.0 %}
+                                <th>{{ column }}</th>
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if data %}
+                    {% for row in data|slice:"1:" %}
+                            <tr>
+                                {% for cell in row %}
+                                    <td>{{ cell }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
             </div>
+          {% endif %}
+            
             <div class="page-divider">
               <span class="page-number">2</span>
             </div>
-            <p>All day long we seemed to dawdle through a country which was full of beauty of every kind. Sometimes we saw little towns or castles on the top of steep hills such as we see in old missals; sometimes we ran by rivers and streams which seemed from the wide stony margin on each side of them to be subject to great floods. It takes a lot of water, and running strong, to sweep the outside edge of a river clear. At every station there were groups of people, sometimes crowds, and in all sorts of attire. Some of them were just like the peasants at home or those I saw coming through France and Germany, with short jackets and round hats and home-made trousers; but others were very picturesque. The women looked pretty, except when you got near them, but they were very clumsy about the waist. They had all full white sleeves of some kind or other, and most of them had big belts with a lot of strips of something fluttering from them like the dresses in a ballet, but of course there were petticoats under them. The strangest figures we saw were the Slovaks, who were more barbarian than the rest, with their big cow-boy hats, great baggy dirty-white trousers, white linen shirts, and enormous heavy leather belts, nearly a foot wide, all studded over with brass nails. They wore high boots, with their trousers tucked into them, and had long black hair and heavy black moustaches. They are very picturesque, but do not look prepossessing. On the stage they would be set down at once as some old Oriental band of brigands. They are, however, I am told, very harmless and rather wanting in natural self-assertion.</p>
-            <p>It was on the dark side of twilight when we got to Bistritz, which is a very interesting old place. Being practically on the frontier—for the Borgo Pass leads from it into Bukovina—it has had a very stormy existence, and it certainly shows marks of it. Fifty years ago a series of great fires took place, which made terrible havoc on five separate occasions. At the very beginning of the seventeenth century it underwent a siege of three weeks and lost 13,000 people, the casualties of war proper being assisted by famine and disease.</p>
+            <p>
+                <strong>Data Exploration</strong>
+                <ul>
+                    <li>{{ statistics }}</li>
+                </ul>
+            </p>
+                <p>It was on the dark side of twilight when we got to Bistritz, which is a very interesting old place. Being practically on the frontier—for the Borgo Pass leads from it into Bukovina—it has had a very stormy existence, and it certainly shows marks of it. Fifty years ago a series of great fires took place, which made terrible havoc on five separate occasions. At the very beginning of the seventeenth century it underwent a siege of three weeks and lost 13,000 people, the casualties of war proper being assisted by famine and disease.</p>
             <div class="page-divider">
               <span class="page-number">3</span>
             </div>
@@ -147,8 +134,8 @@
             </blockquote>
           </main>
           <div class="third-column">
-            <p>Uploaded Data Tables</p>
-            <ul>
+            <p class="upload-list-label">Uploaded Data Tables</p>
+            <ul class="home-list">
               {% for file in files %}
                   <li>
                       <a href="?upload_id={{ file.id }}">{{ file.name }}</a>
@@ -157,6 +144,5 @@
             </ul>
           </div>
     </section>
-
 </body>
 </html>
