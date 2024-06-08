@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/index.css'%}">
+    <link rel="stylesheet" href="{% static 'css/search-bar.css'%}">
     <link rel="stylesheet" href="{% static 'css/hero.css'%}">
     <link rel="stylesheet" href="{% static 'css/upload.css'%}">
     <link rel="stylesheet" href="{% static 'css/data_preview.css'%}">
@@ -77,38 +78,49 @@
           </aside>
           <main class="container">
             {% if data %}
+            <h2>Data Preview</h2>
+            <div class="search-container">
+                <div class="container">
+                    <div class="table-name">
+                        <span>
+                            {{ table_name }}
+                        </span>
+                    </div>
+                    <div class="search-form">
+                        <form method="GET">
+                            <input autocomplete="off" id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
+                            <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+              </div>
             <div class="data_preview">
-              
-              <h2>File Contents {{ file.name }}</h2>
-              <!--Data Query Form-->
-              <form method="GET">
-                <input id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
-                <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
-                <button type="submit">Search</button>
-            </form>
-              <!--Data Query End-->
-              <table id="dataTable">
-                <thead>
-                    <tr>
+
+              <div class="data-table-container">
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            {% if data %}
+                                {% for column in data.0 %}
+                                    <th>{{ column }}</th>
+                                {% endfor %}
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
                         {% if data %}
-                            {% for column in data.0 %}
-                                <th>{{ column }}</th>
+                        {% for row in data|slice:"1:" %}
+                                <tr>
+                                    {% for cell in row %}
+                                        <td>{{ cell }}</td>
+                                    {% endfor %}
+                                </tr>
                             {% endfor %}
                         {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if data %}
-                    {% for row in data|slice:"1:" %}
-                            <tr>
-                                {% for cell in row %}
-                                    <td>{{ cell }}</td>
-                                {% endfor %}
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+              </div>
             </div>
           {% endif %}
             

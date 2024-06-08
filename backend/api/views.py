@@ -21,10 +21,11 @@ class Index(TemplateView):
         selected_upload = None
         data = None
         statistics = {}
+        table_name = ''
         if selected_upload_id:
             try:
                 selected_upload = UploadModel.objects.get(id=selected_upload_id)
-                
+                table_name = selected_upload.table_name
                 # Process the selected upload's file for display
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
 
@@ -43,7 +44,9 @@ class Index(TemplateView):
             'files': files,
             'data': data,
             'statistics': statistics if statistics else {},
-            'selected_upload_id': selected_upload_id,  # Added for template consistency
+            'selected_upload_id': selected_upload_id,
+            'table_name': table_name,
+            # Added for template consistency
         }
         return render(request, self.template_name, context)
     
