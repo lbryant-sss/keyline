@@ -18,9 +18,14 @@ class Index(TemplateView):
 
         # Check if a specific upload was selected
         selected_upload_id = request.GET.get('upload_id')
+        analyze_upload_id = request.GET.get('analyze_id')
         selected_upload = None
         data = None
         table_name = ''
+        file_path = ''
+        analysis_results = None
+
+
         if selected_upload_id:
             try:
                 selected_upload = UploadModel.objects.get(id=selected_upload_id)
@@ -28,16 +33,24 @@ class Index(TemplateView):
                 # Process the selected upload's file for display
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
 
-                
+                #perfoming analysis
+
+                file_path = selected_upload.data_file_upload.path
+
             except UploadModel.DoesNotExist:
                 print(f"UploadModel with ID {selected_upload_id} does not exist")
-       
+        
+
+
+
+
         context = {
             'form': form,
             'files': files,
             'data': data,
             'selected_upload_id': selected_upload_id,
             'table_name': table_name,
+            'file_path': file_path,
             # Added for template consistency
         }
         return render(request, self.template_name, context)

@@ -129,13 +129,15 @@
             </div>
             <p>
                 <strong>Data Exploration</strong>
-                {% if path %}
-                <ul>
-                    <li>{{ path }}</li>
-                </ul>
-                {% else %}
-                <p>There's not path to show</p>
-                {% endif %}
+                
+                    {% if file_path %}
+                    <ul>
+                        <li>{{ file_path }}</li>
+                    </ul>
+                    {% else %}
+                    <p>There's not path to show</p>
+                    {% endif %}
+             
             </p>
              
           </main>
@@ -145,7 +147,7 @@
               {% for file in files %}
                   <li>
                       <a href="?upload_id={{ file.id }}">{{ file.name }}</a>
-                      <a href="{% url 'analyze-file' file.id %}" class="analyze-link">View Statistics</a>
+                      <a href="{% url 'analyze-file' file.id %}" class="analyze-link" style="visibility: hidden;">View Statistics</a>
                   </li>
               {% endfor %}
             </ul>
