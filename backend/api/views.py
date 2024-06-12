@@ -8,7 +8,7 @@ from .analysis import calculate_statistics
 
 class Index(TemplateView):
     template_name = 'pages/home/index.html'
-    
+
     def get(self, request, *args, **kwargs):
         form = UploadForm()
         uploads = UploadModel.objects.all()
@@ -20,7 +20,6 @@ class Index(TemplateView):
         selected_upload_id = request.GET.get('upload_id')
         selected_upload = None
         data = None
-        statistics = {}
         table_name = ''
         if selected_upload_id:
             try:
@@ -29,12 +28,6 @@ class Index(TemplateView):
                 # Process the selected upload's file for display
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
 
-                if data is not None:
-                    # Implement search functionality
-                    print("Data: ", data)
-
-                else:
-                    print("Processed data is empty")
                 
             except UploadModel.DoesNotExist:
                 print(f"UploadModel with ID {selected_upload_id} does not exist")
@@ -43,7 +36,6 @@ class Index(TemplateView):
             'form': form,
             'files': files,
             'data': data,
-            'statistics': statistics if statistics else {},
             'selected_upload_id': selected_upload_id,
             'table_name': table_name,
             # Added for template consistency
@@ -80,9 +72,25 @@ class Index(TemplateView):
         reader = csv.reader(decoded_file)
         data = list(reader)
         return data
+        
 
     
 
 
 def upload_detail(request, upload_id):
     return render(request, 'pages/upload_detail.html', {'upload_id': upload_id})
+
+
+def analyze_file(request, upload_id):
+    #csv_file = UploadModel.objects.get(id=upload_id)
+    #file_path = csv_file.file.path
+    csv_file = get_object_or_404(UploadModel, id=upload_id)
+    file_path = csv_file.data_file_upload.path
+    
+    if file_path:
+        print("File Path is: ", file_path)
+
+    else:
+        print("File Path not found")
+
+    return render(request, 'pages/analyze.html', {'path': file_path})

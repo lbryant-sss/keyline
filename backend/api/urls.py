@@ -6,4 +6,5 @@ urlpatterns = [
     path('', Index.as_view(), name='index-test'),
     #path('<pk>/', CsvDetails.as_view()),
     path('upload/<int:upload_id>/', views.upload_detail, name='upload_detail'),
+    path('analyze/<int:upload_id>/', views.analyze_file, name='analyze-file'),
 ]
