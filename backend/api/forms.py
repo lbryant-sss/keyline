@@ -17,3 +17,4 @@ class UploadForm(forms.ModelForm):
                 'required': True,
             })
         }
+    
