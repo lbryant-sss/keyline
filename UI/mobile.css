@@ -122,6 +122,7 @@ header {
     background-color: #fff;
     box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.1);
     position: fixed;
+    z-index: 1;
 }
 header img {
     width: 50px;
@@ -213,7 +214,38 @@ header ul a{
   }
   
 /*MOBILE MAIN CONTAINER*/
+main {
+    padding: 60px 0 0 0;
+    display: flex !important;
+    flex-direction: row;
+    position: relative;
+    width: 100vw;
+    justify-content: center;
+    background-color: red;
 
+}
+main div {
+    height: calc( 100vh - 90px);
+    border: 1px solid #111;
+    background-color: green;
+}
+main .left-sidebar {
+    position: absolute;
+    width: 80%;
+    display: none;
+    left: 0%;
+}
+main .middle-bar {
+    width: 99%;
+    display: flex;
+}
+.middle-bar .right {
+    justify-self: flex-end;
+}
+main .right-sidebar {
+    width: 80%;
+    display: none;
+}
 
 
   /*DESKTOP VIEW*/
