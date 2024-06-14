@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome | keyline</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&family=LXGW+WenKai+Mono+TC&display=swap" rel="stylesheet">    
+<link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+    <header>
+        <a href="#">
+            <img src="logo.svg" alt="keyline logo">
+        </a>
+        <a href="#" class="logo">
+            <span>keyline</span>
+        </a>
+        <nav>
+            <ul>
+                <a href="#" class="closebar">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#111"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                </a>
+                <a href="#">
+                    <li>How It Works</li>
+                </a>
+                <a href="#">
+                    <li>Porfolio</li>
+                </a>
+                <a href="#">
+                    <li>Contacts</li>
+                </a>
+                <a href="#" class="login-link">
+                    <li>Login</li>
+                </a>
+                <a href="#" class="signup-link">
+                    <li>Signup</li>
+                </a>
+            </ul>
+            <div class="auth-links">
+                <a href="" class="navbar_btn_out">
+                    <span>Login</span>
+                </a>
+                <a href="" class="navbar_btn_out">
+                    <span>Signup</span>
+                </a>
+            </div>
+        </nav>
+        <div class="menu-bar">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#111"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+        </div>
+    </header>
+    <main>
+        <section class="main-container">
+            <div class="left-sidebar">
+                <h2>Left</h2>
+            </div>
+            <div class="middle-bar">
+
+            </div>
+            <div class="right-sidebar">
+
+            </div>
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+
+    <script>
+        const menuBar = document.querySelector('.menu-bar');
+        const menuList = document.querySelector('header nav ul'); // Adjust selector if needed
+        const closeBar = document.querySelector('.closebar'); // New line
+      
+        menuBar.addEventListener('click', () => {
+          menuList.classList.toggle('show'); // Toggle visibility class
+        });
+      
+        closeBar.addEventListener('click', () => { // Add event listener to closebar
+          menuList.classList.remove('show'); // Close the menu
+        });
+      </script>
+      
+      
+</body>
+</html>

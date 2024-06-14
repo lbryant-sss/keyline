@@ -203,7 +203,7 @@ h6 {
         backdrop-filter: blur(4px);
         border-bottom-right-radius: 10px;
         border-bottom-left-radius: 10px;
-        width: 50%;
+        width: 50%; 
         height: auto;
         align-items: stretch;
         margin: 0;

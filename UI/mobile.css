@@ -1,0 +1,285 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;  
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+*{
+    text-decoration: none;
+}
+
+/*MY CODE*/
+/*MOBILE FIRST*/
+/*HEADER*/
+body {
+    background-color: #fff;
+}
+li {
+    list-style-type: none;
+    text-decoration: none;
+}
+header {
+    display: flex;
+    width: 100%;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.1);
+    position: fixed;
+}
+header img {
+    width: 50px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 17px;
+}
+header .menu-bar, img, .logo {
+    line-height: 60px;
+}
+
+header .logo {
+    font-family: "LXGW WenKai Mono TC";
+    font-size: 25px;
+    color: #111;
+    font-weight: 600;
+}
+
+header .menu-bar {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+}
+
+header ul {
+    top: 0;
+    position: fixed;
+    right: 0%;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 999;
+    animation: navMotion 0.5s ease;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 -10px 10px 0 rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 50%; 
+    height: auto;
+    align-items: stretch;
+    margin: 0;
+    border: solid 1px #dadada;
+    font-family: "Catamaran";
+    font-size: 25px;
+    font-weight: 350;
+    padding: 15px;
+}
+header ul.show {
+    display: flex; /* Change display property to show the menu */
+  }
+  
+header ul a{
+    display: block;
+    widows: 100%;
+    padding: 10px 10px 10px 10px;
+    color: #222;
+    text-align: left;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+}
+
+.auth-links {
+    display: none;
+}
+
+.closebar {
+    display: block;
+}
+
+@keyframes navMotion {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+@keyframes hideMenu {
+    from {
+      transform: translateX(0); /* Start from visible state */
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%); /* Slide out to the right */
+      opacity: 0; /* Fade out */
+    }
+  }
+  
+/*MOBILE MAIN CONTAINER*/
+
+
+
+  /*DESKTOP VIEW*/
+@media screen and (min-width: 900px) {
+    header img {
+        width: 60px;
+        height: 60px;
+    }
+    header .menu-bar {
+        right: 30px;
+    }
+    
+    header ul {
+        top: 0;
+        left: 22%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        z-index: 0;
+        box-shadow: 0 0 0 0;
+        backdrop-filter: blur(0);
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+        line-height: 10px;
+        align-items: stretch;
+        margin: 0;
+        border: none;
+        font-family: "Catamaran";
+        font-size: 18px;
+        font-weight: 300;
+        padding: 15px;
+        }
+
+
+    .menu-bar {
+        display: none;
+    } 
+    .closebar {
+        display: none;
+    }
+    .auth-links {
+        display: block;
+        position: absolute;
+        right: 20px;
+        line-height: 60px;
+    }
+    .auth-links a {
+        border: none;
+        margin-right: 10px;
+        border-radius: 4px;
+        font-family: "Catamaran";
+        font-size: 16px;
+        font-weight: 400;
+        color: #fff;
+        background-color: #111;
+    } 
+
+    .auth-links a span {
+        padding: 10px;
+    } 
+    .auth-links a:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+        color: #111;
+    }
+      .auth-links a:last-child {
+        margin-right: 0;
+      }
+      
+}
