@@ -5,6 +5,8 @@ from .models import UploadModel
 import csv
 from .analysis import calculate_statistics
 import pandas as pd
+import matplotlib.pyplot as plt
+from django.utils._os import safe_join
 
 
 class Index(TemplateView):
@@ -39,13 +41,28 @@ class Index(TemplateView):
                 file_path = selected_upload.data_file_upload.path
 
                 ##Convert to df
-
                 csv_data = pd.read_csv(file_path)
 
                 csv_data_shape = csv_data.shape
                 #data_type_info = csv_data.dtypes.to_dict()
                 data_type_info = {column: str(csv_data[column].dtype) for column in csv_data.columns}
-                print(data_type_info)
+
+                ##DRAWING A GRAPH FROM CSV DATA
+                            # Plot bar chart
+                columns = list(data_type_info.keys())
+                data_type_counts = [list(data_type_info.values()).count('int64'),
+                                    list(data_type_info.values()).count('float64'),
+                                    list(data_type_info.values()).count('object')]
+                plt.bar(columns, data_type_counts)
+                plt.xlabel('Data Types')
+                plt.ylabel('Count')
+                plt.title('Data Types Count')
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+                plt.savefig('media/graphs/data_type_info.png')  # Save the plot as a PNG file
+                plt.close()
+
+
 
             except UploadModel.DoesNotExist:
                 print(f"UploadModel with ID {selected_upload_id} does not exist")
@@ -116,3 +133,4 @@ def analyze_file(request, upload_id):
         print("File Path not found")
 
     return render(request, 'pages/analyze.html', {'path': file_path})
+
