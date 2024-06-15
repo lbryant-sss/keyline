@@ -4,6 +4,7 @@ from .forms import UploadForm
 from .models import UploadModel
 import csv
 from .analysis import calculate_statistics
+import pandas as pd
 
 
 class Index(TemplateView):
@@ -33,16 +34,21 @@ class Index(TemplateView):
                 # Process the selected upload's file for display
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
 
-                #perfoming analysis
-
+                ##Processing the csv data
+                #Gets the file path
                 file_path = selected_upload.data_file_upload.path
+
+                ##Convert to df
+
+                csv_data = pd.read_csv(file_path)
+
+                csv_data_shape = csv_data.shape
+                #data_type_info = csv_data.dtypes.to_dict()
+                data_type_info = {column: str(csv_data[column].dtype) for column in csv_data.columns}
+                print(data_type_info)
 
             except UploadModel.DoesNotExist:
                 print(f"UploadModel with ID {selected_upload_id} does not exist")
-        
-
-
-
 
         context = {
             'form': form,
@@ -52,6 +58,9 @@ class Index(TemplateView):
             'table_name': table_name,
             'file_path': file_path,
             # Added for template consistency
+            #pandas analysis results
+            'csv_data_shape': csv_data_shape,
+            'data_types': data_type_info,
         }
         return render(request, self.template_name, context)
     

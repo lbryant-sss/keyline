@@ -133,7 +133,25 @@
                     {% if file_path %}
                     <ul>
                         <li>{{ file_path }}</li>
+                        <p>Data Shape <br> Number of Rows, Columns: {{ csv_data_shape }}</p>
                     </ul>
+                    <h2>Data Types for Each Column:</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Column</th>
+                <th>Data Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for column, data_type in data_types.items %}
+                <tr>
+                    <td>{{ column }}</td>
+                    <td>{{ data_type }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
                     {% else %}
                     <p>There's not path to show</p>
                     {% endif %}
