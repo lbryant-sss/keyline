@@ -137,7 +137,7 @@ header .menu-bar, img, .logo {
 header .logo {
     font-family: "LXGW WenKai Mono TC";
     font-size: 25px;
-    color: #111;
+    color: var(--primary-color);
     font-weight: 600;
 }
 
@@ -166,7 +166,7 @@ header ul {
     align-items: stretch;
     margin: 0;
     border: solid 1px #dadada;
-    font-family: "Catamaran";
+    font-family: var(--font-family);
     font-size: 25px;
     font-weight: 350;
     padding: 15px;
@@ -175,7 +175,7 @@ header ul.show {
     display: flex; /* Change display property to show the menu */
   }
   
-header ul a{
+header ul li a{
     display: block;
     widows: 100%;
     padding: 10px 10px 10px 10px;
@@ -214,7 +214,7 @@ main {
 }
 main div {
     height: calc( 100vh - 90px);
-    border: 1px solid #111;
+    border: 1px solid var(--primary-color);
     background-color: #fff;
 }
 
@@ -227,6 +227,11 @@ main div {
     }
 }
 
+:root {
+    --primary-color: #111;
+    --font-family: "Catamaran";
+    --border-radius: 4px;
+}
   /*DESKTOP VIEW*/
 @media screen and (min-width: 900px) {
     header img {
@@ -244,15 +249,11 @@ main div {
         flex-direction: row;
         justify-content: center;
         z-index: 0;
-        box-shadow: 0 0 0 0;
-        backdrop-filter: blur(0);
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
         line-height: 10px;
         align-items: stretch;
         margin: 0;
         border: none;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-size: 18px;
         font-weight: 300;
         padding: 15px;
@@ -265,20 +266,21 @@ main div {
         display: none;
     }
     .auth-links {
-        display: block;
+        display: flex;
         position: absolute;
         right: 20px;
-        line-height: 60px;
+        margin-top: 10px;
     }
     .auth-links a {
         border: none;
         margin-right: 10px;
         border-radius: 4px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-size: 16px;
         font-weight: 400;
         color: #fff;
-        background-color: #111;
+        background-color: var(--primary-color);
+        padding: 8px;
     } 
 
     .auth-links a span {
@@ -286,7 +288,7 @@ main div {
     } 
     .auth-links a:hover {
         background-color: rgba(0, 0, 0, 0.25);
-        color: #111;
+        color: var(--primary-color);
     }
       .auth-links a:last-child {
         margin-right: 0;
@@ -297,47 +299,52 @@ main div {
     .left-sidebar, .middle-bar {
         border: none;
     }
+    .middle-bar {
+        position: absolute;
+        right: 0%;
+    }
     .left-sidebar {
         background-color: #fff;
         box-shadow: 6px 10px 10px 5px rgba(0,0,0,0.1);
         margin-top: 10px;
-        border-right: 1px solid #111;
-        border-bottom: 1px solid #111;
-        border-radius: 4px;
+        margin-left: 10px !important;
+        border-right: 1px solid #cccccc;
+        width: 22vw;
+        position: fixed;
+        left: 0%;
         }
     .left-sidebar span {
         font-size: 15px;
-        font-family: "Catamaran";
-        padding: 35px;
-        margin-top: 10px;
+        font-family: var(--font-family);
         font-weight: 800;
+        text-align: center;
+        line-height: 40px;
+        padding-left: 20%;
     }
     .left-sidebar form {
-        padding: 15px;
+        padding-left: 10px;
+        background-color: #fff;
     }
     .left-sidebar label {
         font-size: 15px;
-        font-family: "Catamaran";
-        padding: 15px;
-        margin-top: 10px;
+        font-family: var(--font-family);
         font-weight: 400;
     }
     .left-sidebar input {
         height: 30px;
-        width: 99%;
-        border-radius: 4px;
-        outline: #111;
+        border-radius: var(--border-radius);
+        outline: var(--primary-color);
         padding: 5px;
         background-color: rgba(0, 0, 0, 0.25);
-        color: #111;
+        color: var(--primary-color);
         font-size: 15px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-weight: 500;
     }
     .upload-name{
-        border: 1px solid #111;
-        padding: 10px;
+        border: 1px solid var(--primary-color);
         margin: 10px 0;
+        width: 90%;
     }
 
     .input[type="text"] {
@@ -346,26 +353,29 @@ main div {
     }
     
     .upload-file-select {
-        margin-bottom: 8px;
+        width: 91%;
         border: none;
+        margin-bottom: 10px;
+        line-height: 32px;
     }
     .upload-button {
+        width: 40%;
         padding: 10 0 12px 10px;
         font: 1em sans-serif;
-        border: 1px solid #111;
+        border: 1px solid var(--primary-color);
         cursor: pointer;
         font-size: 25px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-weight: 800;
         line-height: 20px;
     }
     .left-sidebar ul {
-        padding: 10px;
+        padding: 20px;
     }
     .left-sidebar ul li a{
         text-decoration: none;
         font-size: 15px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-weight: 600;
     }
     .search-form-container {
@@ -377,11 +387,11 @@ main div {
     }
     .search-form-container span {
         padding: 10px;
-        background: #111;
+        background: var(--primary-color);
         height: 25px;
         width: 20%;
         font-size: 15px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-weight: 500;
         border-radius: 4px 0 0 4px;
         overflow: hidden;
@@ -396,7 +406,7 @@ main div {
         border: none;
         width: 75%;
         border-radius: 0 4px 4px 0;
-        border: 1px solid #111 ;
+        border: 1px solid var(--primary-color);
     }
     .search-form-container input {
         width: calc(100% - 10px);
@@ -405,7 +415,7 @@ main div {
         border: none;
         outline: none;
         font-size: 15px;
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-weight: 500;
     }
     .search-form-container input::placeholder {
@@ -413,7 +423,7 @@ main div {
     }
     input[type="text"] {
         padding-left: 10px;
-        color: #111;
+        color: var(--primary-color);
     }
 
     
@@ -458,7 +468,6 @@ main div {
     }
 
     /*Data Exploration*/
-
     .data-exploration {
         height: 35vh;
         width: 100%;
@@ -474,7 +483,7 @@ main div {
             padding: 10px; /* Optional: adds padding inside the columns */
         }
     .data-exploration span {
-        font-family: "Catamaran";
+        font-family: var(--font-family);
         font-size: 14px;
         font-weight: 800;
         margin: 10px !important;
@@ -486,7 +495,7 @@ main div {
         padding: 6px;
     }
     .data-exploration .col1 {
-        border-right: 1px solid #111;
+        border-right: 1px solid #cccccc;
     }
     .data-exploration .col2 {
         overflow-x: auto scroll;
