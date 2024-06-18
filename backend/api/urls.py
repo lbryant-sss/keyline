@@ -7,4 +7,5 @@ urlpatterns = [
     #path('<pk>/', CsvDetails.as_view()),
     path('upload/<int:upload_id>/', views.upload_detail, name='upload_detail'),
     path('analyze/<int:upload_id>/', views.analyze_file, name='analyze-file'),
+    path('message/', views.messaging, name='send-message'),
 ]

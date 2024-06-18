@@ -11,3 +11,12 @@ class UploadModel(models.Model):
     def __str__(self):
         return self.table_name
 
+class MessagingModel(models.Model):
+    sender_username = models.CharField(max_length=100)
+    sender_email = models.EmailField()
+    subject = models.CharField(max_length=200)
+    body = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.subject

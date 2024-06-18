@@ -1,16 +1,20 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import TemplateView
-from .forms import UploadForm
-from .models import UploadModel
+from .forms import UploadForm, MessagingForm
+from .models import UploadModel, MessagingModel
 import csv
-from .analysis import calculate_statistics
+from django.http import HttpResponse
 import pandas as pd
+from django.core.mail import send_mail
+from django.conf import settings
+
 
 
 class Index(TemplateView):
     template_name = 'pages/home/index.html'
 
     def get(self, request, *args, **kwargs):
+        #This function gets all information to render it on the home page
         form = UploadForm()
         uploads = UploadModel.objects.all()
         
@@ -117,3 +121,34 @@ def analyze_file(request, upload_id):
 
     return render(request, 'pages/analyze.html', {'path': file_path})
 
+
+def messaging(request):
+    if request.method == 'POST':
+        form = MessagingForm(request.POST)
+        if form.is_valid():
+            sender_username = form.cleaned_data['sender_username']
+            sender_email = form.cleaned_data['sender_email']
+            subject = form.cleaned_data['subject']
+            body = form.cleaned_data['body']
+            
+            # Compose the message body to include the sender's username and the actual message body
+            message_body = f"Sender: {sender_username}, {sender_email}\n\n{body}"
+
+            # Send email
+            send_mail(
+                subject,
+                message_body,  # Include both sender's username and the actual message body
+                sender_email,
+                [settings.DEFAULT_FROM_EMAIL],  # This should be the recipient list
+                fail_silently=False,
+            )
+
+            message_sent = "Message sent!"
+
+            return HttpResponse("Message Sent!")
+        else:
+            return HttpResponse("Message Not sent!")
+    else:
+        form = MessagingForm()
+
+    return render(request, 'pages/home/messaging.html', {'form': form})

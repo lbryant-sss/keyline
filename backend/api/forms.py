@@ -1,5 +1,5 @@
 from django import forms
-from .models import UploadModel
+from .models import UploadModel, MessagingModel
 
 class UploadForm(forms.ModelForm):
     class Meta:
@@ -17,4 +17,15 @@ class UploadForm(forms.ModelForm):
                 'required': True,
             })
         }
+
+class MessagingForm(forms.ModelForm):
+    class Meta:
+        model = MessagingModel
+
+        fields = [
+            'sender_username',
+            'sender_email',
+            'subject',
+            'body',
+        ]
     
