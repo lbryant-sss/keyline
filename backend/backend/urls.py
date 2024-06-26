@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),  # Admin URL should come before the catch-all pattern
     path('', include('api.urls')),
-    path('accounts', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 
 # Serve media files during development
