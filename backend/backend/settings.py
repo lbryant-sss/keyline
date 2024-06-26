@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'api',
+    'accounts',
 
 ]
 
@@ -65,6 +66,9 @@ TEMPLATES = [
         },
     },
 ]
+
+
+
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 

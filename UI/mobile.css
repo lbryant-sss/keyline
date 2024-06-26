@@ -108,6 +108,12 @@ input, select {
 /*MY CODE*/
 /*MOBILE FIRST*/
 /*HEADER*/
+
+:root {
+    --primary-color: #111;
+    --font-family: "Catamaran";
+    --border-radius: 4px;
+}
 body {
     background-color: #fff;
 }
@@ -227,13 +233,15 @@ main div {
     }
 }
 
-:root {
-    --primary-color: #111;
-    --font-family: "Catamaran";
-    --border-radius: 4px;
-}
+/*MAIN CONTAINER MOBILE VIEW*/
+
+/*MAIN CONTAINER MOBILE VIEW END*/
+
+
+
   /*DESKTOP VIEW*/
 @media screen and (min-width: 900px) {
+
     header img {
         width: 60px;
         height: 60px;
