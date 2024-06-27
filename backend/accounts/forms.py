@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 
 class UserRegistrationForm(forms.ModelForm):
     #Custom fields for password confirmation
@@ -11,3 +12,8 @@ class UserRegistrationForm(forms.ModelForm):
         fields = [
             'email', 'username',
         ]
+
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.EmailField(label='Email')
+    

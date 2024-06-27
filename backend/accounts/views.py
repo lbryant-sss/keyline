@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect
-from accounts.forms import UserRegistrationForm
+from accounts.forms import UserRegistrationForm, UserLoginForm
 from django.views.generic import View
 from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
-
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 
@@ -43,4 +42,12 @@ class UserRegistrationView(View):
         else:
             form = UserRegistrationForm()
         
+        return render(request, self.template_name, {'form': form})
+    
+
+class UserLoginView(View):
+    template_name = 'pages/auth/login.html'
+
+    def get(self, request):
+        form = UserLoginForm()
         return render(request, self.template_name, {'form': form})
