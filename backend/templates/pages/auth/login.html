@@ -10,9 +10,11 @@
     <h1>
         Login
     </h1>
-    <form action="{% url 'login' %}" method="post">
+    <form action="{% url 'login' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
+        <input type="submit" value="Signin">
     </form>
+    <span>or create a new account <a href="{% url 'register' %}">Signup</a></span>
 </body>
 </html>

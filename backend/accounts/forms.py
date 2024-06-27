@@ -15,5 +15,5 @@ class UserRegistrationForm(forms.ModelForm):
 
 
 class UserLoginForm(AuthenticationForm):
-    username = forms.EmailField(label='Email')
+    username = forms.CharField(label='Email')
     

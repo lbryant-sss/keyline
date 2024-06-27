@@ -2,7 +2,13 @@ from django.shortcuts import render, redirect
 from accounts.forms import UserRegistrationForm, UserLoginForm
 from django.views.generic import View
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.http import HttpResponse
+
+#Password reset view
+from django.contrib.auth.views import (
+    PasswordResetView,
+)
 
 # Create your views here.
 
@@ -22,9 +28,7 @@ class UserRegistrationView(View):
     def post(self, request):
         form = UserRegistrationForm(request.POST)
         
-        print("Form active after POST")
         if form.is_valid():
-            print("Form active")
             cleaned_data = form.cleaned_data
             email = cleaned_data.get('email')
             username = cleaned_data.get('username')
@@ -51,3 +55,28 @@ class UserLoginView(View):
     def get(self, request):
         form = UserLoginForm()
         return render(request, self.template_name, {'form': form})
+    
+    def post(self, request):
+        form = UserLoginForm(request, data=request.POST)
+        #if form.is_valid():
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            
+            return redirect('accounts')
+                
+        else:
+            form = UserLoginForm()
+
+        return render(request, self.template_name, {'form': form})
+    
+
+def logout_user(request):
+    logout(request)
+    return redirect('accounts')
+
+
