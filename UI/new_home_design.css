@@ -1,0 +1,204 @@
+*{
+    margin: 0;
+    scroll-behavior: smooth;
+    padding: 0;
+    box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+}
+ul{
+    list-style: none;
+}
+.section{
+    background-color: bisque;
+    min-height: calc(100vh - 50px);
+    width: 100%;
+}
+.nav{
+    position: fixed;
+    top: 0;
+    height: 50px;
+    width: 100vw;
+    background-color: aliceblue;
+    display: flex;
+    flex-direction: row;
+}
+.branding{
+    flex: 0.25;
+    margin-left: 20px;
+}
+.menu-items{
+    flex: 0.5;
+} .account-options{
+    flex: 0.25;
+    margin-left: 20px;
+}
+.branding img{
+    height: 50px;
+    width: 50px;
+}
+.branding span{
+    position: absolute;
+    top: 18%;
+    font-size: 30px;
+    font-weight: 600;
+}
+.menu-items ul{
+    display: flex;
+    flex-direction: row;
+    line-height: 30px;
+}
+.menu-items ul li{
+    padding: 10px;
+}
+.account-options ul{
+    display: flex;
+    flex-direction: row;
+    line-height: 20px;
+}
+.account-options ul li{
+    padding: 15px;
+}
+/*End of NavBar*/
+.flex{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.flex1, .flex2 {
+    min-height: calc(100% - 60px);
+}
+.flex1{
+    background-color: azure;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.upload-area, .data-list-area{
+    min-width: calc(20vw - 10px);
+}
+.upload-area{
+    flex: 0.3;
+    background-color: cadetblue;
+}
+.data-list-area{
+    flex: 0.7;
+    background-color:coral ;
+}
+
+/*Messanger Area*/
+.messaging-area{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    right: 5px;
+    width: 20%;
+    height: 70vh;
+    opacity: 80%;
+}
+.close-open-area{
+    flex: 0.02;
+    background-color: blueviolet;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    border-bottom: solid 1px #111;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.message-form {
+    display: none;
+    flex: 0.98;
+    background-color: brown;
+}
+.close-open-area span{
+    flex: 0.92;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+}
+.close-open-area img{
+    flex: 0.08;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+.message-form form{
+    display: flex;/*originally display is set to flex*/
+    flex-direction: column;
+    margin: 10px;
+}
+.message-form input{
+    padding: 5px;
+}
+.message-form .name-input, .email-input{
+    border-radius: 4px;
+    border: none;
+}
+.message-form form .name-input, .email-input{
+    height: 30px;
+}
+.message-form .message-input{
+    height: 200px;
+}
+
+.message-form .send-message-button{
+    height: 37px;
+    display: flex;
+    flex-direction: row;
+    border: solid 1px #111;
+    justify-content: space-between;
+}
+.message-form .send-text{
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+}
+.message-form .send-text span{
+    line-height: 37px;
+}
+.message-form button{
+    line-height: 37px;
+    height: 35px;
+    border: none;
+}
+
+/*Messanger Area Styles End*/
+
+.flex2{
+    background-color: aqua;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.preview-area{
+    display: flex;
+    flex-direction: column;
+}
+
+.search-area, .data-area, .uploader-area{
+    min-width: calc(80vw - 10px);
+}
+.uploader-area{
+    background-color: black;
+    flex: 0.1;
+}
+.search-area{
+    background-color: blueviolet;
+    flex: 0.1;
+}
+.data-area{
+    background-color: brown;
+    flex: 0.8;
+}
+
+.data-analysis-section{
+    background-color: cyan;
+    min-height: calc(100vh - 50px);
+    width: 100%;
+}
