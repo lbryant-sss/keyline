@@ -10,20 +10,182 @@ a{
 ul{
     list-style: none;
 }
-.section{
-    background-color: bisque;
-    min-height: calc(100vh - 50px);
-    width: 100%;
-}
-.nav{
-    position: fixed;
-    top: 0;
+
+/*NAVIGATION SECTION -- MOBILE VIEW FIST DESIGN*/
+.nav-section{
     height: 50px;
-    width: 100vw;
-    background-color: aliceblue;
-    display: flex;
-    flex-direction: row;
+    background-color: #fff;
+    position: sticky;
+    top: 0%;
 }
+header {
+    display: flex;
+    width: 100%;
+    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.1);
+    padding-left: 17px;
+    padding-right: 17px;
+    z-index: 1;
+}
+header img {
+    width: 50px;
+    height: 50px;
+}
+header .menu-bar, img, .logo {
+    line-height: 50px;
+}
+
+header .logo {
+    font-family: "LXGW WenKai Mono TC";
+    font-size: 25px;
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+header .menu-bar {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+}
+
+header ul {
+    top: 0;
+    position: fixed;
+    right: 0%;
+    display: none;
+    flex-direction: column;
+    justify-content: flex-start;
+    z-index: 999;
+    animation: navMotion 0.5s ease;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 -10px 10px 0 rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(4px);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 50%; 
+    height: 50px;
+    align-items: stretch;
+    margin: 0;
+    border: solid 1px #dadada;
+    font-family: var(--font-family);
+    font-size: 25px;
+    font-weight: 350;
+    padding: 15px;
+}
+header ul.show {
+    display: flex; /* Change display property to show the menu */
+  }
+  
+header ul li a{
+    display: block;
+    widows: 100%;
+    padding: 10px 10px 10px 10px;
+    color: #222;
+    text-align: left;
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+    }
+}
+
+.auth-links {
+    display: none;
+}
+
+.closebar {
+    display: block;
+}
+.dropdown-auth-links {
+    display: show;
+  }
+
+@keyframes navMotion {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes moveMotion {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/*MAIN CONTAINER MOBILE VIEW END*/
+
+@media screen and (min-width: 900px) {
+
+    header img {
+        width: 50px;
+        height: 50px;
+    }
+    header .menu-bar {
+        right: 30px;
+    }
+    
+    header ul {
+        top: 0;
+        left: 22.5%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        line-height: 10px;
+        align-items: stretch;
+        margin: 0;
+        border: none;
+        font-family: var(--font-family);
+        font-size: 18px;
+        font-weight: 300;
+        padding: 15px;
+        }
+
+    .menu-bar {
+        display: none;
+    } 
+    .closebar {
+        display: none;
+    }
+    .auth-links {
+        display: flex; 
+        position: absolute;
+        right: 20px;
+        margin-top: 10px;
+    }
+    .auth-links a {
+        border: none;
+        margin-right: 10px;
+        border-radius: 4px;
+        font-family: var(--font-family);
+        font-size: 16px;
+        font-weight: 400;
+        color: #111;
+        background-color: var(--primary-color);
+        padding: 8px;
+    } 
+
+    .auth-links a span {
+        padding: 10px;
+    } 
+    .auth-links a:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+        color: var(--primary-color);
+    }
+      .auth-links a:last-child {
+        margin-right: 0;
+      }
+      .dropdown-auth-links {
+        display: none;
+      }
+}
+
+/*NAVIGATION SECTION*/
+
+
+
 .branding{
     flex: 0.25;
     margin-left: 20px;
@@ -64,29 +226,40 @@ ul{
 .flex{
     display: flex;
     flex-direction: row;
-    width: 100%;
+    max-width: calc(100vw - 10px);
+    max-height: calc(100vh-50px);
 }
 
-.flex1, .flex2 {
-    min-height: calc(100% - 60px);
+.flex1{
+    max-height: calc(100vh - 50px);
 }
 .flex1{
     background-color: azure;
-    flex: 1;
+    flex: 0 0 19%;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: calc(100vh - 50px);
+    max-width: 18vw;
+    overflow: hidden;
 }
 .upload-area, .data-list-area{
-    min-width: calc(20vw - 10px);
+    width: 100%;
 }
 .upload-area{
     flex: 0.3;
     background-color: cadetblue;
+    padding: 10px;
 }
 .data-list-area{
     flex: 0.7;
     background-color:coral ;
+    padding: 20px;
+    max-height: 65vh;
+    flex-grow: 1;
 }
+
 
 /*Messanger Area*/
 .messaging-area{
@@ -170,13 +343,52 @@ ul{
 
 /*Messanger Area Styles End*/
 
-.flex2{
-    background-color: aqua;
-    flex: 1;
+
+
+/*Upload Table Area*/
+.upload-form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    padding-right: 15px;
+}
+.upload-form form input{
+    width: 100%;
+    height: 20px;
+    border-radius: 4px;
+    border: none;
+    margin: 8px;
+    outline: none;
+}
+
+/*Upload Table Area*/
+
+
+/*Table List Area*/
+.table-list{
+    width: 100%;
+    height: 90%;
+    border: 1px solid #000;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.table-list ul{
+    max-height: 100%;
+    overflow: auto;
+}
+.data-list-area ul li{
+    padding: 3px;
+}
+/*Table List Area End*/
+
+/*Data Preview Area*/
+.flex2{
+    flex: 1;
+    max-height: calc(100vh - 80px);
+    max-width: 81vw;
 }
 .preview-area{
+    background-color: aqua;
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
@@ -185,20 +397,122 @@ ul{
     min-width: calc(80vw - 10px);
 }
 .uploader-area{
-    background-color: black;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    background-color: #fff;
     flex: 0.1;
+    padding: 10px;
+    height: 40px;
+}
+.uploader-area span{
+    padding: 10px;
+}
+
+.user-profile-picture{
+    border: 1px solid black;
+    border-radius: 50%;
+    height: 37px;
+    width: 37px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user-profile-picture img{
+    max-width: 100%;
+    max-height: 100%;
 }
 .search-area{
     background-color: blueviolet;
     flex: 0.1;
-}
-.data-area{
-    background-color: brown;
-    flex: 0.8;
-}
-
-.data-analysis-section{
-    background-color: cyan;
-    min-height: calc(100vh - 50px);
+    padding: 5px;
+    min-height: 40px;
     width: 100%;
 }
+.search-area form input{
+    height: 30px;
+    width: 100%;
+    padding: 5px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+}
+
+
+.data-area {
+    background-color: brown;
+    flex: 0.8; /* Adjust flex basis as needed */
+    max-height: calc(100vh - 150px); /* Example height calculation */
+    width: calc(100vh - 100px);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative; 
+    overflow: auto;
+}
+
+.data-area table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none;
+    border-radius: 4px;
+    table-layout: fixed;
+    max-height: 100%; /* Limit table height to parent's height */
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping */
+    width: 11vw; /* Set cell width to 11vw */
+}
+
+.table thead {
+    font-family: "Catamaran";
+    font-size: 14px;
+    font-weight: 800;
+    background-color: #f2f2f2; /* Background color for table header */
+}
+
+.table tbody {
+    font-family: "Catamaran";
+    font-size: 14px;
+    font-weight: 400;
+}
+
+/*Data Preview Area End*/
+
+/*Data Analysis Section*/
+.data-analysis-section{
+    width: calc(100vw - 30px);
+    height: calc(100vh - 50px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    padding-top: 10px;
+}
+.data-characteristics {
+    width: 50vw;
+    background-color: antiquewhite;
+}
+.data-graph, .data-characteristics{
+    padding: 10px;
+}
+.data-visuals{
+    width: 50vw;
+    background-color: forestgreen;
+}
+.visuals-text{
+    background-color: #dadada;
+    height: 30px;
+    width:calc(100% - 20px);
+    padding: 10px;
+    margin: 0 auto;
+}
+.visuals-text span{
+    
+}
+
+/*Data Analysis Section*/

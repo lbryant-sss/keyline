@@ -7,90 +7,183 @@
     <title>keyline</title>
 </head>
 <body>
-    <section style="height: 50px;">
+    <section class="nav-section">
         <header>
-            <nav class="nav">
-                <div class="branding">
-                    <a href="$"><img src="logo.svg" alt="keyline logo"></a>
-                    <span><a href="#">keyline</a></span>
-                </div>
-                <div class="menu-items">
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">How keyline works</a></li>
-                        <li><a href="#">Portfolio</a></li>
+            <a href="#">
+                <img src="logo.svg" alt="keyline logo">
+            </a>
+            <a href="#" class="logo">
+                <span>keyline</span>
+            </a>
+            <nav>
+                <ul>
+                    <a href="#" class="closebar">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#111"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                    </a>
+                        <li>
+                            <a href="#">
+                                How It Works
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                How It Works
+                            </a>
+                        </li>
+                        <li class="dropdown-auth-links">
+                            <a href="#" class="login-link">
+                                Login
+                            </a>
+                        </li>
+                        <li class="dropdown-auth-links">
+                            <a href="#" class="signup-link">
+                                Signup
+                            </a>
+                        </li>
                     </ul>
                 </div>
-                <div class="account-options">
-                    <ul>
-                        <li><a href="#">Login</a></li>
-                        <li><a href="#">Create Account</a></li>
-                    </ul>
+                <div class="auth-links">
+                    <a href="#" class="login-link">
+                        Login
+                    </a>
+                    <a href="#" class="signup-link">
+                        Signup
+                    </a>
                 </div>
             </nav>
+            <div class="menu-bar">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#111"><path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/></svg>
+            </div>
         </header>
     </section>
     <section class="section flex">
         <div class="flex1">
             <div class="upload-area">
-
+                <!--Upload area start-->
+                <div class="upload-text">
+                    <span>Upload Data Here</span> <br>
+                    <span style="color: red; font-size: 14px;">*We currently support csv files only</span>
+                </div>
+                <div class="upload-form">
+                    <form action="">
+                        <div>
+                            <label for="">Table Name</label>
+                        <input type="text" name="" id="" placeholder="Unique Table Name">
+                        </div>
+                        <div class="choose-file-area">
+                            <label for="">Choose File</label>
+                            <input type="file" name="" id="">
+                        </div>
+                        <div>
+                            <input type="submit" value="Upload" name="" id="">
+                        </div>
+                    </form>
+                </div>
+                <!--Upload area end-->
             </div>
             <div class="data-list-area">
-
+                <!--Shows tables uploaded in the database-->
+                <div class="table-list-text">
+                    <span>Uploaded Files</span>
+                    <span style="font-size: 12px;">Click to preview the table</span>
+                </div>
+                <div class="table-list">
+                    <ul id="scrollable-list">
+                        <li>
+                            <a href="#">Table 1</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--Shows tables uploaded in the database End-->
             </div>
         </div>
         <div class="flex2">
             <div class="preview-area">
-
-            </div>
-            <div class="uploader-area">
-
-            </div>
-            <div class="search-area">
-
-            </div>
-            <div class="data-area">
-
-            </div>
-            <div class="messaging-area">
-                <div class="close-open-area">
-                    <span>
-                        Send a Message
-                    </span>
-                    <img src="open-messanger.svg" alt="" id="toggleButton">
+                <div class="uploader-area">
+                    <span>Uploaded by:</span>
+                    <div class="user-profile-picture">
+                        <img src="logo.svg" alt="">
+                    </div>
+                    <span> brianmungai350@gmail.com</span>
+                    <span>stocks.csv</span>
+                    <span>1200 rows, 1200 columns</span>
+                    <span>Edit Table</span>
                 </div>
-                <div class="message-form" id="messageForm">
-                    <form action="#">
-                        <label for="">Your Name</label>
-                        <input class="name-input" type="text" name="" id="" placeholder="Your Name">
-                        <br>
-                        <label for="">Your Email</label>
-                        <input class="email-input" type="email" name="" id="" placeholder="example@mail.com">
-                        <br>
-                        <label for="">Message</label>
-                        <input class="message-input" type="text" name="" id="">
-                        <br>
-                        <div class="send-message-button">
-                            <div class="send-text">
-                                <span>Send</span>
-                            </div>
-                            <div>
-                                <button>
-                                    <i>
-                                        <img src="send-message-icon.svg" alt="">
-                                    </i>
-                                </button>
-                            </div>
-                        </div>
+                <div class="search-area">
+                    <form action="">
+                        <input type="text" name="" id="" placeholder="Search the table">
                     </form>
+                </div>
+                <div class="data-area">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Header 1</th>
+                                <th>Header 2</th>
+                                <th>Header 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                        </tbody>
+                    </table>
+                    <!--sample table end-->
                 </div>
             </div>
         </div>
     </section>
     <section class="data-analysis-section">
-        
+        <div class="data-characteristics">
+            <div class="characteristics-text visuals-text">
+                <span>Data characteristics</span>
+            </div>
+        </div>
+        <div class="data-visuals data-graph">
+            <div class="visuals-text">
+                <span>Data Visuals ~ Motion Graph</span>
+            </div>
+        </div>
     </section>
-
+    <footer>
+        <div class="messaging-area">
+            <div class="close-open-area">
+                <span>
+                    Send a Message
+                </span>
+                <img src="open-messanger.svg" alt="" id="toggleButton">
+            </div>
+            <div class="message-form" id="messageForm">
+                <form action="#">
+                    <label for="">Your Name</label>
+                    <input class="name-input" type="text" name="" id="" placeholder="Your Name">
+                    <br>
+                    <label for="">Your Email</label>
+                    <input class="email-input" type="email" name="" id="" placeholder="example@mail.com">
+                    <br>
+                    <label for="">Message</label>
+                    <input class="message-input" type="text" name="" id="">
+                    <br>
+                    <div class="send-message-button">
+                        <div class="send-text">
+                            <span>Send</span>
+                        </div>
+                        <div>
+                            <button>
+                                <i>
+                                    <img src="send-message-icon.svg" alt="">
+                                </i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </footer>
     <script>
         //This makes the form visible on button click
         const toggleButton = document.getElementById('toggleButton');
@@ -108,5 +201,22 @@
             }
         });
     </script>
+    <script>
+        //This is for the side bar
+        const menuBar = document.querySelector('.menu-bar');
+        const menuList = document.querySelector('header nav ul'); // Adjust selector if needed
+        const closeBar = document.querySelector('.closebar'); // New line
+      
+        menuBar.addEventListener('click', () => {
+          menuList.classList.toggle('show'); // Toggle visibility class
+        });
+      
+        closeBar.addEventListener('click', () => { // Add event listener to closebar
+          menuList.classList.remove('show'); // Close the menu
+        });
+
+        
+        
+      </script>
 </body>
 </html>
