@@ -165,18 +165,18 @@
                     <span>Select the axis  that you want to show on the graph</span>
                 </div>
                 <div class="axis-selection-form">
-                    <form action="#">
-                        <div class="x-axis">
-                            <label for="">X&minus;Axis</label>
-                            <select id="multi-select" name="options" multiple>
-                                <option value="option1">Option 1</option>
-                            </select>
-                        </div>
-                        <div class="y-axis">
-                            <label for="">Y&minus;Axis</label>
-                            <select id="multi-select" name="options" multiple>
-                                <option value="option1">Option 1</option>
-                            </select>
+                    <form action="#" class="dropdown">
+                        <div class="select">
+                            <div>
+                                <span>x&minus;</span>
+                            </div>
+                            <div class="caret"></div>
+                            <ul class="menu">
+                                <li>Age</li>
+                                <li>Number</li>
+                                <li>Age</li>
+                                <li>Number</li>
+                            </ul>
                         </div>
                         <button type="submit">Generate Graph</button>
                     </form>
@@ -250,9 +250,36 @@
         closeBar.addEventListener('click', () => { // Add event listener to closebar
           menuList.classList.remove('show'); // Close the menu
         });
+      </script>
+      <script>
+        //This is for the axis selection dropdowns
+        const select = document.querySelector('.select')
+        const caret = document.querySelector('.caret')
+        const menu = document.querySelector('.menu')
+        const options = document.querySelector('.menu li')
+        const selected = document.querySelector('.selector')
 
-        
-        
+        select.addEventListener('click', ()=> {
+            select.classList.toggle('select-clicked');
+            caret.classList.toggle('caret-rotate');
+            menu.classList.toggle('menu-open');
+        });
+
+        options.forEach(option => {
+            option.addEventListener('click', () => {
+                selected.innerText = option.innerText;
+                select.classList.remove('selected-clicked');
+                caret.classList.remove('caret-rotate');
+                menu.classList.remove('menu-open');
+                
+                options.forEach(option => {
+                    option.classList.remove('active');
+                });
+                option.classList.add('active');
+
+            });
+        });
+
       </script>
 </body>
 </html>
