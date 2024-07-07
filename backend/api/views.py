@@ -11,7 +11,7 @@ from django.conf import settings
 
 
 class Index(TemplateView):
-    template_name = 'pages/home/index.html'
+    template_name = 'pages/home/studio.html'
 
     def get(self, request, *args, **kwargs):
         #This function gets all information to render it on the home page

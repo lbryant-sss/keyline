@@ -1,0 +1,262 @@
+{% extends "pages/home/base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!--- <link rel="stylesheet" href="{% static 'css/index.css'%}">
+    <link rel="stylesheet" href="{% static 'css/search-bar.css'%}">
+    <link rel="stylesheet" href="{% static 'css/hero.css'%}">
+    <link rel="stylesheet" href="{% static 'css/upload.css'%}">
+    <link rel="stylesheet" href="{% static 'css/data_preview.css'%}"> -->
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
+    <script src="{% static 'js/search.js' %}" defer></script>
+    <script src="{% static 'js/upload.js' %}"></script>
+    {% block title %}Home{% endblock %}
+
+
+    {% block content %}
+    <section class="section flex">
+        <div class="flex1">
+            <div class="upload-area">
+                <!--Upload area start-->
+                <div class="upload-text">
+                    <span>Upload Data Here</span> <br>
+                    <span style="color: red; font-size: 14px;">*We currently support csv files only</span>
+                </div>
+                <div class="upload-form">
+                    <form action="" method="POST" enctype='multipart/form-data'>
+                        {% csrf_token %}
+                        {{ form }}
+                        <!--<div>
+                            <label for="">Table Name</label>
+                        <input type="text" name="" id="" placeholder="Unique Table Name">
+                        </div>
+                        <div class="choose-file-area">
+                            <label for="">Choose File</label>
+                            <input type="file" name="" id="">
+                        </div>
+                        <div>
+                            <input type="submit" value="Upload" name="" id="">
+                        </div>-->
+                    </form>
+                </div>
+                <!--Upload area end-->
+            </div>
+            <div class="data-list-area">
+                <!--Shows tables uploaded in the database-->
+                <div class="table-list-text">
+                    <span>Uploaded Files</span>
+                    <span style="font-size: 12px;">Click to preview the table</span>
+                </div>
+                <div class="table-list">
+                    <ul class="scrollable-list">
+                        {% if files %}
+                        {% for file in files %}
+                            <li>
+                                <a href="?upload_id={{ file.id }}">{{ file.name }}</a>
+                                <a href="{% url 'analyze-file' file.id %}" class="analyze-link" style="visibility: hidden;">View Statistics</a>
+                            </li>
+                        {% endfor %}
+                        {% else %}
+                        <li>
+                            There&apos;s no table available
+                        </li>
+
+                        {% endif %}
+                    </ul>
+                </div>
+                <!--Shows tables uploaded in the database End-->
+            </div>
+        </div>
+        <div class="flex2">
+            <div class="preview-area">
+                <div class="uploader-area">
+                    <span>Uploaded by:</span>
+                    <div class="user-profile-picture">
+                        <img src="logo.svg" alt="">
+                    </div>
+                    <span> brianmungai350@gmail.com</span>
+                    <span> {{ table_name }}</span>
+                    <span>Number of Rows, Columns: {{ csv_data_shape }}</span>
+                    <span>Edit Table</span>
+                </div>
+                <div class="search-area search-form">
+                    <form method="GET">
+                        <input autocomplete="off" id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
+                        <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div class="data-area">
+                    {% if data %}
+                    <table id="dataTable" class="table">
+                        <thead>
+                            <tr>
+                                {% if data %}
+                                    {% for column in data.0 %}
+                                        <th>{{ column }}</th>
+                                    {% endfor %}
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if data %}
+                            {% for row in data|slice:"1:" %}
+                                    <tr>
+                                        {% for cell in row %}
+                                            <td>{{ cell }}</td>
+                                        {% endfor %}
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>No table to preview</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    {% endif %}
+                    <!--sample table end-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--End of Preview Section-->
+
+    <!--Data Analysis Section-->
+    <section class="data-analysis-section">
+        <div class="data-characteristics">
+            <div class="characteristics-text visuals-text">
+                <span>Data characteristics</span>
+            </div>
+            <div class="data-characteristics-container">
+                <span>Your table&apos;s characteristics</span>
+                <table class="data-characteristics-container-table" >
+                    <tr>
+                        <td>Columns:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Rows:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Data Distribution:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Number of rows missing values:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Duplicates:</td>
+                        <td></td>
+                    </tr>
+                    </table>
+                    <br>
+                    <span>Perform Statistics on a specific row</span>
+                    <form action="#" method="post">
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                              <option selected>Open this select menu</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                          </div>
+                          <button type="submit" class="select-submit-button">Display Stats</button>
+                    </form>
+                    <table class="data-characteristics-container-table">
+                    <tr>
+                        <td>Mean:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum Value:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Minimum Value:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Median:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Standard Deviation:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Range:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Data Type:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Data Uniqueness:</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Mode:</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="data-visuals data-graph">
+            <div class="visuals-text">
+                <span>Data Visuals ~ Motion Graph</span>
+            </div>
+            <div class="graph-wrapper">
+                <div class="graph-options">
+                    <span>Table Name</span>
+                    <a href="#">
+                        <span style="line-height: 14px; margin-right: 5px; color: #222;">Download graph</span>
+                        <img src="download_icon.svg" alt="download_icon" style="width: 30px;">
+                    </a>
+                </div>
+                <div class="graph">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/M0w2eQ-FcEA?si=PACKLneCQqPPgi8f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+            </div>
+            <div class="select-axis">
+                <div class="choose-axis-text">
+                    <span>Select the axis  that you want to show on the graph</span>
+                </div>
+                <div class="axis-selection">
+                    <form action="#" method="post" >
+                        <div class="form-floating">
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                              <option selected>Select Y-axis row</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                           
+                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                              <option selected>Select Y-axis row</option>
+                              <option value="1">One</option>
+                              <option value="2">Two</option>
+                              <option value="3">Three</option>
+                            </select>
+                           </div>
+                          <button type="submit" class="select-submit-button">Display Stats</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    {% endblock %}
