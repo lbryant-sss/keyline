@@ -288,6 +288,7 @@ header ul li a{
     height: 70vh;
     opacity: 90%;
     font-family: var(--font-family);
+    background-color: green;
 }
 .close-open-area{
     flex: 0.02;

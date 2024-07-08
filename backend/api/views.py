@@ -14,16 +14,13 @@ class Index(TemplateView):
     template_name = 'pages/home/studio.html'
 
     def get(self, request, *args, **kwargs):
-        #This function gets all information to render it on the home page
         form = UploadForm()
         uploads = UploadModel.objects.all()
         
-        # Extracting file names and ids from the instances
         files = [{'id': upload.id, 'name': upload.table_name} for upload in uploads]
 
-        # Check if a specific upload was selected
         selected_upload_id = request.GET.get('upload_id')
-        analyze_upload_id = request.GET.get('analyze_id')
+        selected_column = request.GET.get('selected_column')  # Add this to get selected column
         selected_upload = None
         data = None
         table_name = ''
@@ -31,28 +28,34 @@ class Index(TemplateView):
         analysis_results = None
         csv_data_shape = ()
         data_type_info = {}
-
+        rows_with_missing_values = 0
+        column_names = []
 
         if selected_upload_id:
             try:
                 selected_upload = UploadModel.objects.get(id=selected_upload_id)
                 table_name = selected_upload.table_name
-                # Process the selected upload's file for display
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
-
-                ##Processing the csv data
-                #Gets the file path
                 file_path = selected_upload.data_file_upload.path
 
-                ##Convert to df
+                # Load CSV data into a Pandas DataFrame
                 csv_data = pd.read_csv(file_path)
 
-                csv_data_shape = csv_data.shape
-                #data_type_info = csv_data.dtypes.to_dict()
-                data_type_info = {column: str(csv_data[column].dtype) for column in csv_data.columns}
+                 # Calculate statistics for each numeric column individually
+                
+                # Calculate statistics for each numeric column
+             
+               # Count rows with any missing values
+                rows_with_missing_values = len(csv_data[csv_data.isnull().any(axis=1)])
+
+                # Get column names from the DataFrame
+                column_names = csv_data.columns.tolist()
 
             except UploadModel.DoesNotExist:
                 print(f"UploadModel with ID {selected_upload_id} does not exist")
+
+        data_rows = csv_data.shape[0]
+        data_columns = csv_data.shape[1]
 
         context = {
             'form': form,
@@ -61,13 +64,14 @@ class Index(TemplateView):
             'selected_upload_id': selected_upload_id,
             'table_name': table_name,
             'file_path': file_path,
-            # Added for template consistency
-            #pandas analysis results
             'csv_data_shape': csv_data_shape,
+            'data_rows': data_rows,
+            'data_columns': data_columns,
             'data_types': data_type_info,
+            'rows_with_missing_values': rows_with_missing_values,
+            'column_names': column_names,
         }
-        return render(request, self.template_name, context)
-    
+        return render(request, self.template_name, context) 
     def post(self, request, *args, **kwargs):  
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -99,8 +103,7 @@ class Index(TemplateView):
         data = list(reader)
         return data
         
-
-    
+ 
 
 
 def upload_detail(request, upload_id):

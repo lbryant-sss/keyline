@@ -73,7 +73,7 @@
         </div>
         <div class="flex2">
             <div class="preview-area">
-                <div class="uploader-area">
+                <div class="uploader-area" style="margin-bottom: 10px;">
                     <span>Uploaded by:</span>
                     <div class="user-profile-picture">
                         <img src="logo.svg" alt="">
@@ -83,11 +83,11 @@
                     <span>Number of Rows, Columns: {{ csv_data_shape }}</span>
                     <span>Edit Table</span>
                 </div>
-                <div class="search-area search-form">
+                <div class="search-area search-form" style="margin-top: 10px;">
                     <form method="GET">
                         <input autocomplete="off" id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
                         <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
-                        <button type="submit">Search</button>
+        
                     </form>
                 </div>
                 <div class="data-area">
@@ -140,12 +140,12 @@
                 <span>Your table&apos;s characteristics</span>
                 <table class="data-characteristics-container-table" >
                     <tr>
-                        <td>Columns:</td>
-                        <td></td>
+                        <td>Columns</td>
+                        <td>{{ data_columns }}</td>
                     </tr>
                     <tr>
-                        <td>Rows:</td>
-                        <td></td>
+                        <td>Rows</td>
+                        <td>{{ data_rows }}</td>
                     </tr>
                     <tr>
                         <td>Data Distribution:</td>
@@ -153,7 +153,7 @@
                     </tr>
                     <tr>
                         <td>Number of rows missing values:</td>
-                        <td></td>
+                        <td>{{ rows_with_missing_values }}</td>
                     </tr>
                     <tr>
                         <td>Duplicates:</td>
@@ -162,17 +162,19 @@
                     </table>
                     <br>
                     <span>Perform Statistics on a specific row</span>
-                    <form action="#" method="post">
+                    <form action="#" method="get">
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                               <option selected>Open this select menu</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                            {% for column in column_names %}
+                                  <option value="{{ loop.index }}">{{ column }}</option>
+                            {% endfor %}
                             </select>
                           </div>
-                          <button type="submit" class="select-submit-button">Display Stats</button>
-                    </form>
+                          <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
+                        <button type="submit" class="select-submit-button">Display Stats</button>
+                        </form>
+                    <!-- Display statistics -->
                     <table class="data-characteristics-container-table">
                     <tr>
                         <td>Mean:</td>
@@ -211,6 +213,7 @@
                         <td></td>
                     </tr>
                 </table>
+                
             </div>
         </div>
         <div class="data-visuals data-graph">
@@ -238,20 +241,18 @@
                         <div class="form-floating">
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                               <option selected>Select Y-axis row</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              {% for column in column_names %}
+                                  <option value="{{ loop.index }}">{{ column }}</option>
+                            {% endfor %}
                             </select>
                            
                             <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
                               <option selected>Select Y-axis row</option>
-                              <option value="1">One</option>
-                              <option value="2">Two</option>
-                              <option value="3">Three</option>
+                              {% for column in column_names %}
+                                  <option value="{{ loop.index }}">{{ column }}</option>
+                            {% endfor %}
                             </select>
-                           </div>
-                          <button type="submit" class="select-submit-button">Display Stats</button>
-                    </form>
+                           </div></form>
                 </div>
             </div>
         </div>

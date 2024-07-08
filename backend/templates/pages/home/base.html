@@ -9,13 +9,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@100..900&display=swap" rel="stylesheet">
+<script src="{% static 'js/search.js' %}"></script>
 <title>{% block title %}My Site{% endblock %}</title>
 </head>
 <body>
     <section class="nav-section">
         <header>
             <a href="#">
-                <img src="logo.svg" alt="keyline logo">
+                <img src="{% static 'images/logo.svg' %}" alt="keyline logo">
             </a>
             <a href="#" class="logo">
                 <span>keyline</span>
@@ -69,60 +70,62 @@
     {% block content %}
 
     {% endblock %}
-    <footer>
-        <div class="items">
-            <div class="item">
-                <div class="mouse m-5"></div>
-            </div>
+   <footer>
+    <div class="items">
+        <div class="item">
+            <div class="mouse m-5"></div>
         </div>
-        <div class="messaging-area">
-            <div class="close-open-area">
-                <span>
-                    Send a Message
-                </span>
-                <img src="open-messanger.svg" alt="" id="toggleButton">
-            </div>
-            <div class="message-form" id="messageForm">
-                <form action="#">
-                    <label for="">Your Name</label>
-                    <input class="name-input" type="text" name="" id="" placeholder="Your Name">
-                    <br>
-                    <label for="">Your Email</label>
-                    <input class="email-input" type="email" name="" id="" placeholder="example@mail.com">
-                    <br>
-                    <label for="">Message</label>
-                    <input class="message-input" type="text" name="" id="" >
-                    <br>
-                    <div class="send-message-button">
-                        <div class="send-text">
-                            <span>Send</span>
-                        </div>
-                        <div>
-                            <button type="submit">
-                                <i style="background-color: transparent;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#222"><path d="M120-160v-640l760 320-760 320Zm66.67-102 520.66-218-520.66-220v158.67L428-480l-241.33 60v158Zm0 0v-438 438Z"/></svg>
-                                </i>
-                            </button>
-                        </div>
+    </div>
+    <div class="messaging-area" id="messaging-area">
+        <div class="close-open-area">
+            <span>
+                Send a Message
+            </span>
+            <img src="{% static 'images/open-messanger.svg' %}" alt="" id="toggleButton">
+        </div>
+        <div class="message-form" id="messageForm">
+            <form action="#">
+                <label for="">Your Name</label>
+                <input class="name-input" type="text" name="" id="" placeholder="Your Name">
+                <br>
+                <label for="">Your Email</label>
+                <input class="email-input" type="email" name="" id="" placeholder="example@mail.com">
+                <br>
+                <label for="">Message</label>
+                <input class="message-input" type="text" name="" id="" >
+                <br>
+                <div class="send-message-button">
+                    <div class="send-text">
+                        <span>Send</span>
                     </div>
-                </form>
-            </div>
+                    <div>
+                        <button type="submit">
+                            <i style="background-color: transparent;">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#222"><path d="M120-160v-640l760 320-760 320Zm66.67-102 520.66-218-520.66-220v158.67L428-480l-241.33 60v158Zm0 0v-438 438Z"/></svg>
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </footer>
+    </div>
+</footer>
     <script>
         //This makes the form visible on button click
         const toggleButton = document.getElementById('toggleButton');
         const messageForm  = document.getElementById('messageForm');
         const toggleIcon = document.getElementById('toggleButton');
-
+        const messagingArea = document.getElementById('messaging-area');
 
         toggleButton.addEventListener('click', () => {
             if(messageForm.style.display == 'none' || messageForm.style.display === ''){
                 messageForm.style.display = 'block';
-                toggleIcon.src = 'close-messanger.svg';
+                messagingArea.style.height = '70vh';
+                toggleIcon.src = "{% static 'images/close-messanger.svg' %}";
             } else {
                 messageForm.style.display = 'none';
-                toggleButton.src = 'open-messanger.svg';
+                messagingArea.style.height = '20px';
+                toggleButton.src = "{% static 'images/open-messanger.svg' %}";
             }
         });
     </script>
