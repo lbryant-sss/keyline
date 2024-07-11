@@ -30,6 +30,8 @@ class Index(TemplateView):
         data_type_info = {}
         rows_with_missing_values = 0
         column_names = []
+        csv_data = ''
+        
 
         if selected_upload_id:
             try:
