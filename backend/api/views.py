@@ -20,7 +20,8 @@ class Index(TemplateView):
         files = [{'id': upload.id, 'name': upload.table_name} for upload in uploads]
 
         selected_upload_id = request.GET.get('upload_id')
-        selected_column = request.GET.get('selected_column')  # Add this to get selected column
+        selected_column_index = request.GET.get('selected_column')
+       
         selected_upload = None
         data = None
         table_name = ''
@@ -30,18 +31,39 @@ class Index(TemplateView):
         data_type_info = {}
         rows_with_missing_values = 0
         column_names = []
-        csv_data = ''
+        csv_data = None
+        data_rows = 0
+        data_columns = 0
+        no_csv_data_error_message = ''
         
 
         if selected_upload_id:
             try:
+                #This retrieves the selected file
                 selected_upload = UploadModel.objects.get(id=selected_upload_id)
+                
+                #This accesses the selected table attributes
                 table_name = selected_upload.table_name
                 data = self.process_uploaded_file(selected_upload.data_file_upload)
                 file_path = selected_upload.data_file_upload.path
 
                 # Load CSV data into a Pandas DataFrame
-                csv_data = pd.read_csv(file_path)
+                if file_path is not None:
+                    try:
+                        csv_data = pd.read_csv(file_path)
+                    except Exception as e:
+                        no_csv_data_error_message = f"Error loading CSV file: {e}"
+                else:
+                    no_csv_data_error_message = "File path is None."
+                
+
+                if csv_data is not None:
+                    data_rows = csv_data.shape[0]
+                    data_columns = csv_data.shape[1]
+                    
+                    
+                else:
+                    no_csv_data_error_message = "Failed to load csv information."
 
                  # Calculate statistics for each numeric column individually
                 
@@ -53,11 +75,14 @@ class Index(TemplateView):
                 # Get column names from the DataFrame
                 column_names = csv_data.columns.tolist()
 
-            except UploadModel.DoesNotExist:
-                print(f"UploadModel with ID {selected_upload_id} does not exist")
+                
 
-        data_rows = csv_data.shape[0]
-        data_columns = csv_data.shape[1]
+            except UploadModel.DoesNotExist:
+                pass
+                #print(f"UploadModel with ID {selected_upload_id} does not exist")
+
+        #data_rows = csv_data.shape[0]
+        #data_columns = csv_data.shape[1]
 
         context = {
             'form': form,
@@ -67,12 +92,16 @@ class Index(TemplateView):
             'table_name': table_name,
             'file_path': file_path,
             'csv_data_shape': csv_data_shape,
-            'data_rows': data_rows,
-            'data_columns': data_columns,
+            #'data_rows': data_rows,
+            #'data_columns': data_columns,
             'data_types': data_type_info,
             'rows_with_missing_values': rows_with_missing_values,
             'column_names': column_names,
+            'data_rows': data_rows,
+            'data_columns': data_columns,
+            'no_csv_data_error_message': no_csv_data_error_message,
         }
+
         return render(request, self.template_name, context) 
     def post(self, request, *args, **kwargs):  
         form = UploadForm(request.POST, request.FILES)

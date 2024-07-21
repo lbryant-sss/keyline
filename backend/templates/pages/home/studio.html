@@ -9,6 +9,8 @@
    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <script src="{% static 'js/search.js' %}" defer></script>
     <script src="{% static 'js/upload.js' %}"></script>
+    <script src="https://d3js.org/d3.v7.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     {% block title %}Home{% endblock %}
 
 
@@ -25,17 +27,9 @@
                     <form action="" method="POST" enctype='multipart/form-data'>
                         {% csrf_token %}
                         {{ form }}
-                        <!--<div>
-                            <label for="">Table Name</label>
-                        <input type="text" name="" id="" placeholder="Unique Table Name">
-                        </div>
-                        <div class="choose-file-area">
-                            <label for="">Choose File</label>
-                            <input type="file" name="" id="">
-                        </div>
-                        <div>
+                        <div style="cursor: pointer;">
                             <input type="submit" value="Upload" name="" id="">
-                        </div>-->
+                        </div>
                     </form>
                 </div>
                 <!--Upload area end-->
@@ -82,7 +76,6 @@
                     <form method="GET">
                         <input autocomplete="off" id="searchInput" type="text" name="search" placeholder="Search" value="{{ search_query }}">
                         <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
-        
                     </form>
                 </div>
                 <div class="data-area">
@@ -149,18 +142,18 @@
                     </table>
                     <br>
                     <span>Perform Statistics on a specific row</span>
-                    <form method="GET">
+                    <form method="GET" action="{%  url 'studio' %}">
                         <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                            <select class="form-select" id="floatingSelect" name="selected_column" aria-label="Floating label select example">
                               <option selected>Open this select menu</option>
                             {% for column in column_names %}
-                                  <option value="{{ loop.index }}">{{ column }}</option>
+                                  <option value="{{ forloop.counter0 }}">{{ column }}</option>
                             {% endfor %}
                             </select>
                           </div>
-                          <input type="hidden" name="upload_id" value="{{ selected_upload_id }}">
-                            <button type="submit" class="select-submit-button">Display Stats</button>
-                        </form>
+                          <input type="hidden" name="upload_id" value="{{ selected_column }}">
+                        <button type="submit" class="select-submit-button">Display Stats</button>
+                    </form>
                     <!-- Display statistics -->
                     <table class="data-characteristics-container-table">
                     <tr>
@@ -247,8 +240,23 @@
                 </div>
             </div>
         </div>
+        <span style="display: none;" id="file_path_link">{{ file_path }}</span>
     </section>
+    <script>
+        const user_file = document.getElementById('file_path_link');
+        const data = d3.csv(",", user_file)
 
+        if(user_file){
+            console.log(user_file, ' Found')
+        } else{
+            console.log("File not found")
+        }
+        if(data){
+            console.log("Data from file is here: ", data)
+        } else{
+            console.log("No data to show");
+        }
+    </script>
 
 
     {% endblock %}
