@@ -138,7 +138,30 @@ class Index(TemplateView):
 
 
 def upload_detail(request, upload_id):
-    return render(request, 'pages/upload_detail.html', {'upload_id': upload_id})
+    selected_upload_id = upload_id
+    uploads = UploadModel.objects.all()    
+    files = [{'id': upload.id, 'name': upload.table_name} for upload in uploads]
+    selected_upload = UploadModel.objects.get(id=selected_upload_id)
+
+    upload_instance = get_object_or_404(UploadModel, id=selected_upload_id)
+
+
+    created_at = upload_instance.created_at
+    name = upload_instance.table_name
+
+    instance = Index()
+
+    data = instance.process_uploaded_file(selected_upload.data_file_upload)
+
+
+    context = {
+        'upload_id': upload_id,
+        'file': files,
+        'data': data,
+        'created_at': created_at,
+        'name': name,
+    }
+    return render(request, 'pages/upload_detail.html', context=context)
 
 
 def analyze_file(request, upload_id):

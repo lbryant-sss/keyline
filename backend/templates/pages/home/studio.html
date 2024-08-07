@@ -9,8 +9,7 @@
    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" rel="stylesheet">
     <script src="{% static 'js/search.js' %}" defer></script>
     <script src="{% static 'js/upload.js' %}"></script>
-    <script src="https://d3js.org/d3.v7.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     {% block title %}Home{% endblock %}
 
 
@@ -70,7 +69,9 @@
                     <span> brianmungai350@gmail.com</span>
                     <span> {{ table_name }}</span>
                     <span>Number of Rows, Shape: {{ data_rows }}, {{ data_columns }}</span>
-                    <span>Edit Table</span>
+                    <span>
+                        <a href="{% url 'upload_detail' selected_upload_id %}" >View table</a>
+                    </span>
                 </div>
                 <div class="search-area search-form" style="margin-top: 10px;">
                     <form method="GET">
@@ -243,19 +244,20 @@
         <span style="display: none;" id="file_path_link">{{ file_path }}</span>
     </section>
     <script>
-        const user_file = document.getElementById('file_path_link');
-        const data = d3.csv(",", user_file)
-
-        if(user_file){
+        const user_file = document.getElementById('file_path_link').textContent;
+        
+        document.addEventListener('DOMContentLoaded', function(){
+            if(user_file){
             console.log(user_file, ' Found')
-        } else{
-            console.log("File not found")
-        }
-        if(data){
-            console.log("Data from file is here: ", data)
-        } else{
-            console.log("No data to show");
-        }
+            } else{
+                console.log("File not found")
+            }
+            d3.csv(user_file).then(function(data){
+            console.log(data);
+        })
+        })
+
+        
     </script>
 
 

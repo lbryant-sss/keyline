@@ -6,9 +6,41 @@
     <title>Upload Detail</title>
 </head>
 <body>
-    <h1>{{ upload.table_name }}</h1>
-    <p>Created at: {{ upload.created_at }}</p>
+    <h1>{{ name }}</h1>
+    <p>Created at: {{ created_at }}</p>
     <p>Data File: <a href="{{ upload.data_file_upload.url }}">{{ upload.data_file_upload.name }}</a></p>
-
+    <p>{{ upload_id }}</p>
+    {% if data %}
+    <table id="dataTable" class="table">
+        <thead>
+            <tr>
+                {% if data %}
+                    {% for column in data.0 %}
+                        <th>{{ column }}</th>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if data %}
+            {% for row in data|slice:"1:" %}
+                    <tr>
+                        {% for cell in row %}
+                            <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+    </table>
+    {% else %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>No table to preview</th>
+            </tr>
+        </thead>
+    </table>
+    {% endif %}
 </body>
 </html>
