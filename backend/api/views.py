@@ -1,13 +1,15 @@
+import json
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views.generic import TemplateView
 from .forms import UploadForm, MessagingForm
 from .models import UploadModel, MessagingModel
 import csv
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import pandas as pd
 from django.core.mail import send_mail
 from django.conf import settings
 
+from django import forms
 
 
 class Index(TemplateView):
@@ -134,34 +136,54 @@ class Index(TemplateView):
         data = list(reader)
         return data
         
- 
 
 
 def upload_detail(request, upload_id):
     selected_upload_id = upload_id
-    uploads = UploadModel.objects.all()    
+    uploads = UploadModel.objects.all()
     files = [{'id': upload.id, 'name': upload.table_name} for upload in uploads]
     selected_upload = UploadModel.objects.get(id=selected_upload_id)
 
     upload_instance = get_object_or_404(UploadModel, id=selected_upload_id)
 
-
     created_at = upload_instance.created_at
     name = upload_instance.table_name
 
-    instance = Index()
+    file_path = selected_upload.data_file_upload.path
+    df = pd.read_csv(file_path)  # Correctly reading the CSV file
 
-    data = instance.process_uploaded_file(selected_upload.data_file_upload)
+    # Handle form submission
+    if request.method == 'POST':
+        table_data = request.POST.get('tableData')
+        table_data = json.loads(table_data)  # Deserialize the table data from JSON
 
+        # Update the DataFrame with the new data
+        new_df = pd.DataFrame(table_data, columns=df.columns)
+        new_df.to_csv(file_path, index=False)  # Save the updated CSV
+
+        # Redirect to the same page after saving
+        return HttpResponseRedirect(request.path_info)
+
+    # If not POST, just display the file data
+    field_names = []
+    for i in range(len(df)):
+        field_row = []
+        for column in df.columns:
+            field_row.append(f"{column}_{i}")
+        field_names.append(field_row)
+
+    data = df.values.tolist()  # Convert DataFrame to a list of lists for rendering in the template
 
     context = {
         'upload_id': upload_id,
         'file': files,
         'data': data,
+        'columns': df.columns,
         'created_at': created_at,
         'name': name,
     }
-    return render(request, 'pages/upload_detail.html', context=context)
+
+    return render(request, 'pages/upload_detail.html', context)
 
 
 def analyze_file(request, upload_id):
@@ -176,7 +198,26 @@ def analyze_file(request, upload_id):
     else:
         print("File Path not found")
 
-    return render(request, 'pages/analyze.html', {'path': file_path})
+
+    #Processing for repeated and NULL values to style them
+
+    styles = {}
+
+    table_df = pd.read_csv(file_path)
+
+    #NULL values
+    for column in table_df.columns:
+        for index, value in table_df[column].items():
+            x = pd.isnull(value)
+            if not x:
+                styles[(index, column)] = 'null-value'
+
+    context = {
+        'path': file_path,
+        'styles': styles,
+    }
+
+    return render(request, 'pages/analyze.html', context=context)
 
 
 def messaging(request):

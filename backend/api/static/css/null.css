@@ -1,0 +1,4 @@
+.null-value {
+    background-color: #f8d7da; /* Light red background for NULL values */
+    color: #721c24; /* Red text color */
+}

@@ -1,38 +1,100 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload Detail</title>
+    <link rel="stylesheet" href="{% static 'css/null.css' %}">
+    <script>
+        // Function to make cells editable when clicked
+        function makeEditable(event) {
+            let cell = event.target;
+
+            if (cell.tagName === "TD" && cell.isContentEditable === false) {
+                cell.contentEditable = true;
+                cell.focus();
+
+                // Save changes when the cell loses focus
+                cell.onblur = function() {
+                    cell.contentEditable = false;
+                };
+            }
+        }
+
+        // Add event listener to the table
+        document.addEventListener("DOMContentLoaded", function() {
+            let table = document.getElementById("dataTable");
+            table.addEventListener("click", makeEditable);
+        });
+
+        // Function to gather the table data and submit it via POST
+        function submitTableData() {
+            let table = document.getElementById("dataTable");
+            let data = [];
+            let rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) { // Skip the header row
+                let cells = rows[i].getElementsByTagName("td");
+                let rowData = [];
+                for (let j = 0; j < cells.length; j++) {
+                    rowData.push(cells[j].innerText);
+                }
+                data.push(rowData);
+            }
+
+            // Create a hidden form and submit it
+            let form = document.createElement("form");
+            form.method = "POST";
+            form.action = ""; // Current URL
+
+            let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            let csrfInput = document.createElement("input");
+            csrfInput.type = "hidden";
+            csrfInput.name = "csrfmiddlewaretoken";
+            csrfInput.value = csrfToken;
+            form.appendChild(csrfInput);
+
+            let input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "tableData";
+            input.value = JSON.stringify(data);
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
     <h1>{{ name }}</h1>
     <p>Created at: {{ created_at }}</p>
     <p>Data File: <a href="{{ upload.data_file_upload.url }}">{{ upload.data_file_upload.name }}</a></p>
-    <p>{{ upload_id }}</p>
+
     {% if data %}
-    <table id="dataTable" class="table">
-        <thead>
-            <tr>
-                {% if data %}
-                    {% for column in data.0 %}
+    <form method="POST">
+        {% csrf_token %}
+        <table id="dataTable" class="table" border="1">
+            <thead>
+                <tr>
+                    {% for column in columns %}
                         <th>{{ column }}</th>
                     {% endfor %}
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% if data %}
-            {% for row in data|slice:"1:" %}
-                    <tr>
-                        {% for cell in row %}
-                            <td>{{ cell }}</td>
-                        {% endfor %}
-                    </tr>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    {% for cell in row %}
+                        <td class="{{ style_class }}">{{ cell }}</td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-            {% endif %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </form>
+    <button onclick="submitTableData()" type="submit">Save Changes</button>
     {% else %}
     <table class="table">
         <thead>

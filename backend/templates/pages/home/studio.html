@@ -70,7 +70,9 @@
                     <span> {{ table_name }}</span>
                     <span>Number of Rows, Shape: {{ data_rows }}, {{ data_columns }}</span>
                     <span>
-                        <a href="{% url 'upload_detail' selected_upload_id %}" >View table</a>
+                        {% if selected_upload_id %}
+                            <a href="{% url 'upload_detail' selected_upload_id %}" >View table</a>
+                        {% endif %}
                     </span>
                 </div>
                 <div class="search-area search-form" style="margin-top: 10px;">
