@@ -1,10 +1,7 @@
+{% extends 'pages/home/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{% block content %}
     <title>Upload Detail</title>
     <link rel="stylesheet" href="{% static 'css/null.css' %}">
     <script>
@@ -104,5 +101,6 @@
         </thead>
     </table>
     {% endif %}
-</body>
-</html>
+
+
+{% endblock %}
