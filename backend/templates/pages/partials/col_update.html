@@ -1,0 +1,12 @@
+<div class="data">
+    <h2>Data for {{ selected_column }}</h2>
+    {% if col_data_list %}
+        <ul>
+            {% for item in col_data_list %}
+                <li>{{ item }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No data available.</p>
+    {% endif %}
+</div>

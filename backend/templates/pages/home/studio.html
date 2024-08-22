@@ -145,18 +145,33 @@
                     </table>
                     <br>
                     <span>Perform Statistics on a specific row</span>
-                    <form method="GET" action="{%  url 'studio' %}">
                         <div class="form-floating">
-                            <select class="form-select" id="floatingSelect" name="selected_column" aria-label="Floating label select example">
-                              <option selected>Open this select menu</option>
+                            {% if selected_upload_id %}
+                            <select class="form-select" id="floatingSelect" name="selected_column" aria-label="Floating label select example" hx-get="{% url 'update_col_data' selected_upload_id %}?selected_column={{ selected_column }}" hx-target="#column-data" hx-trigger="change">
                             {% for column in column_names %}
-                                  <option value="{{ forloop.counter0 }}">{{ column }}</option>
+                                  <option value="{{ column}}"
+                                  {% if selected_column == column %} selected {% endif %}
+                                  >
+                                    {{ column }}
+                                    </option>
                             {% endfor %}
                             </select>
+                            {% endif %}
                           </div>
-                          <input type="hidden" name="upload_id" value="{{ selected_column }}">
-                        <button type="submit" class="select-submit-button">Display Stats</button>
-                    </form>
+                          <div class="column-display data" id="column-data">
+                            <h2>Data for {{ selected_column }}</h2>
+                            {% if col_data_list %}
+                                <ul>
+                                    {% for item in col_data_list %}
+                                        <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% else %}
+                                <p>
+                                    <strong>No data to show</strong>
+                                </p>
+                            {% endif %}
+                          </div>
                     <!-- Display statistics -->
                     <table class="data-characteristics-container-table">
                     <tr>
@@ -209,7 +224,7 @@
             </div>
             <div class="graph-wrapper">
                 <div class="graph-options">
-                    <span>Table Name</span>
+                    <span>{{ table_name }}</span>
                     <a href="#">
                         <span style="line-height: 14px; margin-right: 5px; color: #222;">Download graph</span>
                         <img src="download_icon.svg" alt="download_icon" style="width: 30px;">

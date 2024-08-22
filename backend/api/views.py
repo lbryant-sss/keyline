@@ -24,6 +24,7 @@ class Index(TemplateView):
         selected_upload_id = request.GET.get('upload_id')
         selected_column_index = request.GET.get('selected_column')
        
+        selected_column = ''
         selected_upload = None
         data = None
         table_name = ''
@@ -37,6 +38,8 @@ class Index(TemplateView):
         data_rows = 0
         data_columns = 0
         no_csv_data_error_message = ''
+        col_data_list = []
+
         
 
         if selected_upload_id:
@@ -77,11 +80,20 @@ class Index(TemplateView):
                 # Get column names from the DataFrame
                 column_names = csv_data.columns.tolist()
 
+
+                #This is to get the selected row for analysis and graph
+                default_col_name = column_names[1]
+                selected_column = request.GET.get('selected_column', default_col_name)
+                #default selected column data
+                col_data = csv_data[selected_column]
+                col_data_list = col_data.tolist()
                 
 
             except UploadModel.DoesNotExist:
                 pass
                 #print(f"UploadModel with ID {selected_upload_id} does not exist")
+
+            
 
         #data_rows = csv_data.shape[0]
         #data_columns = csv_data.shape[1]
@@ -99,12 +111,17 @@ class Index(TemplateView):
             'data_types': data_type_info,
             'rows_with_missing_values': rows_with_missing_values,
             'column_names': column_names,
+            #Selected column from dropdown
+            'selected_column': selected_column,
+            #selected column data
+            "col_data_list": col_data_list,
+
             'data_rows': data_rows,
             'data_columns': data_columns,
             'no_csv_data_error_message': no_csv_data_error_message,
         }
-
         return render(request, self.template_name, context) 
+    
     def post(self, request, *args, **kwargs):  
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -135,6 +152,33 @@ class Index(TemplateView):
         reader = csv.reader(decoded_file)
         data = list(reader)
         return data
+    
+def update_col_data(request, upload_id):
+    selected_upload_id = upload_id
+    uploads = UploadModel.objects.all()
+    files = [{'id': upload.id, 'name': upload.table_name} for upload in uploads]
+    selected_upload = UploadModel.objects.get(id=selected_upload_id)
+
+    upload_instance = get_object_or_404(UploadModel, id=selected_upload_id)
+
+
+    file_path = selected_upload.data_file_upload.path
+    context = {}
+    csv_data = pd.read_csv(file_path)
+    # Get column names from the DataFrame
+    column_names = csv_data.columns.tolist()
+    #This is to get the selected row for analysis and graph
+    default_col_name = column_names[1]
+    selected_column = request.GET.get('selected_column', default_col_name)
+    #default selected column data
+    col_data = csv_data[selected_column]
+    col_data_list = col_data.tolist()
+    
+    context = {
+        "col_data_list": col_data_list,
+    }
+    
+    return render(request, 'pages/partials/col_update.html', context)
         
 
 
